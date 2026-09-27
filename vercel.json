@@ -1,0 +1,94 @@
+{
+  "redirects": [
+    {
+      "source": "/go/internet",
+      "destination": "https://TARGET-set-internet-publisher-link",
+      "permanent": false
+    },
+    {
+      "source": "/go/kaution",
+      "destination": "https://TARGET-set-deposit-publisher-link",
+      "permanent": false
+    },
+    {
+      "source": "/go/konto",
+      "destination": "https://TARGET-set-bank-publisher-link",
+      "permanent": false
+    },
+    {
+      "source": "/go/strom",
+      "destination": "https://TARGET-set-energy-publisher-link",
+      "permanent": false
+    },
+    {
+      "source": "/go/versicherung",
+      "destination": "https://TARGET-set-insurance-publisher-link",
+      "permanent": false
+    },
+    {
+      "source": "/go/fitness",
+      "destination": "https://TARGET-set-gym-partner",
+      "permanent": false
+    },
+    {
+      "source": "/go/garten",
+      "destination": "https://TARGET-set-garden-partner",
+      "permanent": false
+    },
+    {
+      "source": "/go/handwerker",
+      "destination": "https://TARGET-set-trades-partner",
+      "permanent": false
+    },
+    {
+      "source": "/go/makler",
+      "destination": "https://TARGET-set-agent-partner",
+      "permanent": false
+    },
+    {
+      "source": "/go/mobilitaet",
+      "destination": "https://TARGET-set-mobility-partner",
+      "permanent": false
+    },
+    {
+      "source": "/go/moebel",
+      "destination": "https://TARGET-set-furniture-partner",
+      "permanent": false
+    },
+    {
+      "source": "/go/reinigung",
+      "destination": "https://TARGET-set-cleaning-partner",
+      "permanent": false
+    },
+    {
+      "source": "/go/reinigung-uebergabe",
+      "destination": "https://TARGET-set-handover-cleaning",
+      "permanent": false
+    },
+    {
+      "source": "/go/sanierung",
+      "destination": "https://TARGET-set-renovation-partner",
+      "permanent": false
+    },
+    {
+      "source": "/go/schluesseldienst",
+      "destination": "https://TARGET-set-locksmith-partner",
+      "permanent": false
+    },
+    {
+      "source": "/go/sprachkurse",
+      "destination": "https://TARGET-set-language-school-partner",
+      "permanent": false
+    },
+    {
+      "source": "/go/transporter",
+      "destination": "https://TARGET-set-van-rental-partner",
+      "permanent": false
+    },
+    {
+      "source": "/go/umzug",
+      "destination": "https://TARGET-set-moving-partner",
+      "permanent": false
+    }
+  ]
+}
