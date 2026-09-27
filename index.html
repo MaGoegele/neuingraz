@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Neu in Graz & Umziehen in Graz: Info-Portal</title>
+<meta name="description" content="Alles fuer Wohnen, Umzug und Ankommen in Graz: Internet, Handy, Versicherung, Umzug, Reinigung. Ein gepruefter Partner pro Aufgabe.">
+<meta name="theme-color" content="#16351F">
+<link rel="canonical" href="https://neuingraz.at/">
+
+<!-- Open Graph / social preview -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Neu in Graz: Info-Portal">
+<meta property="og:description" content="Von Internet bis Uebergabe: ein gepruefter Grazer Partner pro Aufgabe.">
+<meta property="og:locale" content="de_AT">
+<meta property="og:image" content="preview.png">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 42 58'%3E%3Cpath d='M21 2 L33 14 H9 Z' fill='%23B98A2E'/%3E%3Crect x='11' y='14' width='20' height='40' fill='%2316351F'/%3E%3Ccircle cx='21' cy='26' r='6' fill='%23EFF3EA'/%3E%3C/svg%3E">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+
+<!--
+  ============================================================================
+  GRAZ INFO-PORTAL  ·  eine Landing Page fuer neuingraz.at + umzieheningraz.at
+  ============================================================================
+  Neutrale Info-Seite (nicht Nahuen-Suites-Branding). Ablauf:
+    1) GATE: Sprache (DE/EN/SL/HR/HU) + Frage "Neu in Graz" oder "Umziehen"
+    2) HUB:  Anbieter-Verzeichnis + Partner-Mitgliedschaft + E-Mail
+
+  ALLES aus zwei Konfigs steuerbar:
+    • T     = alle Texte (de/en/sl/hr/hu)
+    • CATS  = Kategorien (Titel/Text je Sprache, Partner, /go/-Link, Typ)
+
+  MONETARISIERUNG (beide Modelle vereint):
+    • Affiliate-Kategorien -> /go/-Link (financeAds/durchblicker/AWIN)
+    • Anbieter-Mitgliedschaft: 3 Stufen (Basis/Featured/Exklusiv)
+      -> Stripe-Abo-Link je Stufe. Exklusiv = nur 1 Anbieter pro Kategorie.
+    • Kategorisierung: Anbieter tragen sich per Formular selbst ein
+      (REG_FORM-URL unten) -> das ist zugleich deine Verkaufsliste.
+
+  Zwei Domains -> automatische Vorauswahl (optional, s. detectIntent()):
+    neuingraz.at -> "neu",  umzieheningraz.at -> "umziehen".
+  Recht: bezahlte Plaetze mit "Anzeige"/"Ad" gekennzeichnet (Kennzeichnungspflicht).
+  ============================================================================
+-->
+
+<style>
+  :root{
+    --pine:#16351F; --pine-2:#0F2716; --green:#2E6B3E; --green-soft:#E4EEE1;
+    --paper:#F4F1E7; --card:#FDFCF6; --red:#BE372C;
+    --gold:#B98A2E; --gold-soft:#F3E9CE;
+    --ink:#151C16; --muted:#5B6A5D; --line:#DAD6C6; --radius:15px;
+    --shadow:0 10px 24px rgba(22,53,31,.09);
+    --shadow-lg:0 22px 50px rgba(22,53,31,.16);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--paper);color:var(--ink);
+    font-family:"Inter",system-ui,sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:1000px;margin:0 auto;padding:0 20px;}
+  .eyebrow{font-family:"JetBrains Mono",monospace;font-weight:700;font-size:.72rem;
+    letter-spacing:.16em;text-transform:uppercase;color:var(--green);}
+  a{color:inherit;}
+
+  /* ===== GATE ===== */
+  .gate{position:fixed;inset:0;z-index:100;color:#EFF3EA;overflow:auto;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    text-align:center;padding:30px 20px;
+    background:
+      radial-gradient(1200px 600px at 12% -10%, rgba(185,138,46,.22), transparent 60%),
+      radial-gradient(900px 500px at 110% 20%, rgba(46,107,62,.45), transparent 55%),
+      linear-gradient(160deg,#16351F 0%, #0F2716 60%, #0B1D10 100%);}
+  .gate::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.06;
+    background-image:radial-gradient(#EFF3EA 1px, transparent 1px);
+    background-size:22px 22px;}
+  .gate.hidden{display:none;}
+  .gate .lang{position:absolute;top:20px;right:20px;display:flex;gap:6px;flex-wrap:wrap;
+    justify-content:flex-end;max-width:60vw;
+    font-family:"JetBrains Mono",monospace;font-size:.78rem;z-index:2;}
+  .lang button{background:transparent;border:1px solid #3c5c45;color:#B9CBB4;
+    padding:6px 10px;border-radius:8px;cursor:pointer;font-family:inherit;font-weight:700;
+    transition:background .16s,border-color .16s,color .16s;}
+  .lang button:hover{border-color:var(--gold);color:#fff;}
+  .lang button.on{background:var(--gold);border-color:var(--gold);color:#231a06;}
+  .gate .mark{margin-bottom:10px;filter:drop-shadow(0 8px 22px rgba(0,0,0,.35));}
+  .gate .kick{font-family:"JetBrains Mono",monospace;letter-spacing:.16em;text-transform:uppercase;
+    font-size:.72rem;color:var(--gold);font-weight:700;}
+  .gate h1{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;
+    font-size:clamp(2rem,6vw,3.4rem);line-height:1.05;margin:10px 0 6px;color:#fff;max-width:18ch;}
+  .gate p.sub{color:#B9CBB4;max-width:46ch;margin:0 0 32px;font-size:1.02rem;}
+  .choices{display:flex;gap:16px;flex-wrap:wrap;justify-content:center;}
+  .choice{background:rgba(15,39,22,.72);border:1px solid #315539;border-radius:16px;padding:26px 24px;
+    width:230px;cursor:pointer;text-align:left;transition:transform .16s,border-color .16s,background .16s,box-shadow .16s;color:inherit;
+    backdrop-filter:blur(3px);}
+  .choice:hover{transform:translateY(-4px);border-color:var(--gold);background:#123018;box-shadow:var(--shadow-lg);}
+  .choice:focus-visible{outline:3px solid var(--gold);outline-offset:2px;}
+  .choice .ic{font-size:1.5rem;margin-bottom:8px;display:block;}
+  .choice strong{font-family:"Bricolage Grotesque",sans-serif;font-size:1.2rem;color:#fff;display:block;}
+  .choice small{color:#9db69c;font-size:.85rem;display:block;margin-top:4px;}
+  .gate .trust{margin-top:30px;font-family:"JetBrains Mono",monospace;font-size:.68rem;
+    letter-spacing:.08em;color:#7f9a7e;text-transform:uppercase;}
+
+  /* ===== HUB ===== */
+  #hub.hidden{display:none;}
+  .topbar{border-bottom:1px solid var(--line);position:sticky;top:0;
+    background:rgba(244,241,231,.9);backdrop-filter:blur(8px);z-index:40;}
+  .topbar .wrap{display:flex;align-items:center;justify-content:space-between;height:60px;gap:12px;}
+  .brand{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:1.05rem;
+    color:var(--pine);text-decoration:none;letter-spacing:-.01em;}
+  .brand b{color:var(--red);}
+  .tnav{display:flex;align-items:center;gap:16px;flex-wrap:wrap;}
+  .tnav a{color:var(--muted);text-decoration:none;font-size:.84rem;font-weight:600;}
+  .tnav a:hover{color:var(--pine);} .tnav a.pt{color:var(--red);}
+  .langmini{display:flex;gap:4px;font-family:"JetBrains Mono",monospace;font-size:.7rem;flex-wrap:wrap;}
+  .langmini button{background:transparent;border:1px solid var(--line);color:var(--muted);
+    padding:4px 7px;border-radius:6px;cursor:pointer;font-family:inherit;font-weight:700;}
+  .langmini button.on{background:var(--pine);border-color:var(--pine);color:#fff;}
+  @media(max-width:640px){.tnav a{display:none;} .tnav a.pt{display:inline;}}
+
+  .hero{padding:54px 0 20px;position:relative;}
+  .hero .back{background:none;border:none;color:var(--muted);font-size:.8rem;cursor:pointer;
+    padding:0;font-family:"JetBrains Mono",monospace;margin-bottom:14px;}
+  .hero .back:hover{color:var(--red);}
+  .hero h1{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;
+    font-size:clamp(2rem,5.5vw,3.5rem);line-height:1.03;letter-spacing:-.02em;
+    margin:8px 0 0;color:var(--pine);max-width:18ch;}
+  .hero p.lead{font-size:1.1rem;color:var(--muted);max-width:58ch;margin:16px 0 0;}
+  .hero .meta{margin-top:22px;font-family:"JetBrains Mono",monospace;font-size:.76rem;
+    color:var(--pine);display:flex;gap:22px;flex-wrap:wrap;}
+  .hero .meta b{color:var(--red);font-size:1rem;}
+  .statband{display:flex;gap:10px;flex-wrap:wrap;margin-top:26px;}
+  .stat{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 16px;flex:1;min-width:140px;}
+  .stat .n{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:1.5rem;color:var(--pine);line-height:1;}
+  .stat .l{font-size:.74rem;color:var(--muted);margin-top:3px;}
+
+  .ad{position:relative;margin:28px 0;border:1.5px dashed var(--gold);
+    background:linear-gradient(180deg,var(--gold-soft),#FBF3E2);
+    border-radius:var(--radius);padding:22px 20px;text-align:center;color:#6a5320;}
+  .ad .tag{position:absolute;top:9px;left:12px;font-family:"JetBrains Mono",monospace;
+    font-size:.6rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);}
+  .ad strong{display:block;font-family:"Bricolage Grotesque",sans-serif;font-size:1rem;color:#7a5f1e;}
+  .ad small{font-size:.8rem;opacity:.85;}
+  .ad a{color:#7a5f1e;font-weight:700;}
+
+  .group{margin:38px 0 8px;}
+  .group-head{display:flex;align-items:baseline;gap:12px;border-bottom:2px solid var(--pine);
+    padding-bottom:7px;margin-bottom:18px;}
+  .group-head h2{font-family:"Bricolage Grotesque",sans-serif;font-weight:700;font-size:1.3rem;
+    color:var(--pine);margin:0;}
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+  @media(max-width:760px){.grid{grid-template-columns:repeat(2,1fr);}}
+  @media(max-width:480px){.grid{grid-template-columns:1fr;}}
+
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    padding:16px 16px 14px;display:flex;flex-direction:column;
+    transition:transform .16s,box-shadow .16s,border-color .16s;}
+  .card:hover{transform:translateY(-3px);box-shadow:var(--shadow);border-color:#c4cbb8;}
+  .card .ctop{display:flex;align-items:center;gap:8px;margin-bottom:4px;}
+  .card h3{font-family:"Bricolage Grotesque",sans-serif;font-weight:700;font-size:1rem;margin:0;color:var(--ink);}
+  .badge{margin-left:auto;font-family:"JetBrains Mono",monospace;font-size:.54rem;font-weight:700;
+    letter-spacing:.1em;text-transform:uppercase;padding:2px 6px;border-radius:5px;line-height:1.3;flex:none;}
+  .badge.aff{color:var(--green);border:1px solid var(--green);}
+  .badge.spo{color:var(--gold);border:1px solid var(--gold);}
+  .card p{font-size:.82rem;color:var(--muted);margin:2px 0 12px;flex:1;}
+  .pl{font-size:.8rem;margin-bottom:10px;}
+  .pl .lbl{font-family:"JetBrains Mono",monospace;font-size:.58rem;letter-spacing:.08em;
+    text-transform:uppercase;color:var(--muted);display:block;margin-bottom:1px;}
+  .pl b{color:var(--pine);font-size:.9rem;} .pl.free b{color:var(--red);}
+  .go{display:inline-flex;align-items:center;justify-content:center;gap:6px;background:var(--green);
+    color:#fff;text-decoration:none;font-weight:600;font-size:.84rem;padding:9px 12px;border-radius:9px;
+    border:none;cursor:pointer;font-family:"Inter",sans-serif;transition:background .16s;width:100%;}
+  .go:hover{background:var(--pine);}
+  .go:focus-visible{outline:3px solid var(--gold);outline-offset:2px;}
+  .go.claim{background:transparent;color:var(--red);border:1.5px dashed var(--red);}
+  .go.claim:hover{background:#fbeceb;}
+
+  /* Partner-Stufen */
+  .partnerbox{background:#fff;border:2px solid var(--pine);border-radius:22px;padding:34px 26px;margin:46px 0;
+    box-shadow:var(--shadow);}
+  .partnerbox h2{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;
+    font-size:clamp(1.5rem,4vw,2.1rem);color:var(--pine);margin:6px 0 6px;}
+  .partnerbox .sub{color:var(--muted);max-width:58ch;margin:0 0 22px;}
+  .tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+  @media(max-width:640px){.tiers{grid-template-columns:1fr;}}
+  .tier{border:1px solid var(--line);border-radius:14px;padding:20px 18px;display:flex;flex-direction:column;background:var(--paper);
+    transition:transform .16s,box-shadow .16s;}
+  .tier:hover{transform:translateY(-3px);box-shadow:var(--shadow);}
+  .tier.hot{border:2px solid var(--gold);background:#fff;position:relative;}
+  .tier.hot::after{content:"★";position:absolute;top:-11px;left:50%;transform:translateX(-50%);
+    background:var(--gold);color:#231a06;width:22px;height:22px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;font-size:.8rem;}
+  .tier .nm{font-family:"JetBrains Mono",monospace;font-weight:700;letter-spacing:.08em;
+    text-transform:uppercase;font-size:.72rem;color:var(--green);}
+  .tier.hot .nm{color:var(--gold);}
+  .tier .pr{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:2rem;color:var(--pine);margin:6px 0 2px;}
+  .tier .pr span{font-size:.9rem;font-weight:500;color:var(--muted);}
+  .tier ul{list-style:none;margin:12px 0 16px;padding:0;flex:1;}
+  .tier li{font-size:.84rem;color:var(--ink);padding:4px 0 4px 20px;position:relative;}
+  .tier li:before{content:"✓";position:absolute;left:0;color:var(--green);font-weight:700;}
+  .tier button{background:var(--pine);color:#fff;border:none;border-radius:9px;padding:11px;
+    font-weight:700;font-size:.88rem;cursor:pointer;font-family:inherit;}
+  .tier.hot button{background:var(--gold);color:#231a06;}
+  .tier button:hover{filter:brightness(1.08);}
+  .reg{margin-top:20px;font-size:.86rem;}
+  .reg a{color:var(--red);font-weight:700;}
+  .partner-note{font-size:.76rem;color:var(--muted);margin-top:16px;line-height:1.5;}
+
+  .capture{background:linear-gradient(160deg,var(--green-soft),#EFF5EC);border:1px solid #cfe0c8;
+    border-radius:20px;padding:32px 26px;margin:40px 0;text-align:center;}
+  .capture h2{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:1.55rem;color:var(--pine);margin:0 0 6px;}
+  .capture p{color:var(--muted);max-width:48ch;margin:0 auto 18px;font-size:.94rem;}
+  .capture .row{display:flex;gap:10px;max-width:440px;margin:0 auto;}
+  @media(max-width:520px){.capture .row{flex-direction:column;}}
+  .capture input{flex:1;padding:12px 14px;border-radius:10px;border:1px solid #b9cbb0;background:#fff;font-size:.95rem;font-family:inherit;}
+  .capture input:focus-visible{outline:3px solid var(--gold);outline-offset:1px;}
+  .capture button{background:var(--pine);color:#fff;border:none;border-radius:10px;padding:12px 20px;font-weight:700;font-size:.95rem;cursor:pointer;font-family:inherit;}
+  .capture button:hover{background:var(--green);}
+  .capture .ok{color:var(--green);font-weight:600;margin-top:14px;min-height:1.1em;font-size:.88rem;}
+
+  footer{border-top:1px solid var(--line);padding:26px 0 60px;color:var(--muted);font-size:.78rem;}
+  footer .disc{background:#EDEADD;border-radius:12px;padding:13px 15px;margin-bottom:16px;line-height:1.5;}
+  footer a{color:var(--green);}
+
+  .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);
+    background:var(--pine);color:#fff;padding:12px 20px;border-radius:99px;font-size:.85rem;font-weight:600;
+    opacity:0;pointer-events:none;transition:.35s;z-index:120;box-shadow:var(--shadow-lg);max-width:90vw;}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+  @media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto;}}
+</style>
+</head>
+<body>
+
+<!-- ===== GATE ===== -->
+<div class="gate" id="gate">
+  <div class="lang" role="group" aria-label="Sprache / Language">
+    <button data-lang="de" class="on">DE</button>
+    <button data-lang="en">EN</button>
+    <button data-lang="sl">SL</button>
+    <button data-lang="hr">HR</button>
+    <button data-lang="hu">HU</button>
+  </div>
+  <div class="mark" aria-hidden="true">
+    <!-- Uhrturm-Silhouette (Graz) -->
+    <svg width="42" height="58" viewBox="0 0 42 58" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M21 2 L33 14 H9 Z" fill="#B98A2E"/>
+      <rect x="11" y="14" width="20" height="40" fill="#EFF3EA"/>
+      <circle cx="21" cy="26" r="6" fill="#16351F" stroke="#B98A2E" stroke-width="1.5"/>
+      <rect x="20.3" y="22" width="1.4" height="5" fill="#B98A2E"/>
+      <rect x="15" y="40" width="5" height="14" fill="#16351F"/>
+      <rect x="22" y="40" width="5" height="14" fill="#16351F"/>
+    </svg>
+  </div>
+  <div class="kick" id="gKick">Graz · Info-Portal</div>
+  <h1 id="gH1">Willkommen. Was bringt dich her?</h1>
+  <p class="sub" id="gSub">Alles fuer Wohnen, Umzug und Ankommen in Graz: ein gepruefter Partner pro Aufgabe.</p>
+  <div class="choices">
+    <button class="choice" data-intent="neu">
+      <span class="ic" aria-hidden="true">🧳</span>
+      <strong id="gNew">Neu in Graz</strong>
+      <small id="gNewD">Ich ziehe nach Graz und richte alles neu ein.</small>
+    </button>
+    <button class="choice" data-intent="umziehen">
+      <span class="ic" aria-hidden="true">📦</span>
+      <strong id="gMove">Umziehen in Graz</strong>
+      <small id="gMoveD">Ich wechsle innerhalb von Graz die Wohnung.</small>
+    </button>
+  </div>
+  <div class="trust" id="gTrust">Kostenlos · Keine Anmeldung · Ein gepruefter Partner pro Aufgabe</div>
+</div>
+
+<!-- ===== HUB ===== -->
+<div id="hub" class="hidden">
+  <div class="topbar">
+    <div class="wrap">
+      <a href="#" class="brand" id="hBrand">Wohnen in <b>Graz</b></a>
+      <div class="tnav">
+        <a href="#directory" id="nCats">Kategorien</a>
+        <a href="#partner" class="pt" id="nPartner">Partner werden</a>
+        <div class="langmini">
+          <button data-lang="de" class="on">DE</button>
+          <button data-lang="en">EN</button>
+          <button data-lang="sl">SL</button>
+          <button data-lang="hr">HR</button>
+          <button data-lang="hu">HU</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <header class="hero">
+    <div class="wrap">
+      <button class="back" id="backBtn">← <span id="backTxt">andere Auswahl</span></button>
+      <div class="eyebrow" id="hKick"></div>
+      <h1 id="hH1"></h1>
+      <p class="lead" id="hLead"></p>
+      <div class="meta">
+        <span><b id="mMembers">66.000</b> <span id="mMembersL"></span></span>
+        <span><b id="mCats">0</b> <span id="mCatsL"></span></span>
+        <span><b id="mFree">0</b> <span id="mFreeL"></span></span>
+      </div>
+    </div>
+  </header>
+
+  <div class="wrap">
+    <div class="ad"><span class="tag" id="adTag">Anzeige</span>
+      <strong id="adStrong"></strong><small id="adSmall"></small></div>
+
+    <div id="directory"></div>
+
+    <section id="partner" class="partnerbox">
+      <div class="eyebrow" id="pKick"></div>
+      <h2 id="pH2"></h2>
+      <p class="sub" id="pSub"></p>
+      <div class="tiers" id="tiers"></div>
+      <p class="reg" id="regLine"></p>
+      <p class="partner-note" id="pNote"></p>
+    </section>
+
+    <section class="capture">
+      <h2 id="cH2"></h2>
+      <p id="cP"></p>
+      <div class="row">
+        <input id="email" type="email" aria-label="E-Mail">
+        <button id="subBtn" type="button"></button>
+      </div>
+      <div class="ok" id="subOk" role="status"></div>
+    </section>
+  </div>
+
+  <footer>
+    <div class="wrap">
+      <div class="disc" id="fDisc"></div>
+      © <span id="yr"></span> <span id="fName">Graz Info-Portal</span> &nbsp;·&nbsp;
+      <a href="#" id="fImp">Impressum</a> &nbsp;·&nbsp; <a href="#" id="fDat">Datenschutz</a>
+    </div>
+  </footer>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ================= TEXTE (de/en/sl/hr/hu) ================= */
+const REG_FORM = "#anbieter-registrieren"; // <- LIVE: Google-Form/Typeform-URL
+const T = {
+  de:{
+    gKick:"Graz · Info-Portal", gH1:"Willkommen. Was bringt dich her?",
+    gSub:"Alles fuer Wohnen, Umzug und Ankommen in Graz: ein gepruefter Partner pro Aufgabe.",
+    gNew:"Neu in Graz", gNewD:"Ich ziehe nach Graz und richte alles neu ein.",
+    gMove:"Umziehen in Graz", gMoveD:"Ich wechsle innerhalb von Graz die Wohnung.",
+    gTrust:"Kostenlos · Keine Anmeldung · Ein gepruefter Partner pro Aufgabe",
+    nCats:"Kategorien", nPartner:"Partner werden", back:"andere Auswahl",
+    kickNew:"Neu in Graz", kickMove:"Umziehen in Graz",
+    h1New:"Angekommen in Graz? Wir haben alles vorbereitet.",
+    h1Move:"Umzug in Graz? Erledige alles an einem Ort.",
+    leadNew:"Von Internet ueber Versicherung bis zur Wohnungsuebergabe: fuer jede Aufgabe ein gepruefter Grazer Partner. Kein Suchen.",
+    leadMove:"Umzugsfirma, Reinigung, Uebergabe, neue Vertraege: gebuendelt, damit dein Wohnungswechsel reibungslos laeuft.",
+    mMembersL:"in der Wohnungs-Gruppe", mCatsL:"Kategorien", mFreeL:"Partnerplaetze frei",
+    adStrong:"Werbeplatz fuer einen Grazer Partner", adSmall:"Banner · direkt vermarktet",
+    badgeRec:"Empfehlung", badgeAd:"Anzeige", plRec:"Empfehlung", plPartner:"Empfohlener Partner",
+    free:"Dein Platz hier →", view:"Ansehen →", claim:"Diesen Platz sichern",
+    pKick:"Fuer Grazer Betriebe", pH2:"Werde gelisteter Partner",
+    pSub:"Erreiche Menschen, die gerade in Graz umziehen oder ankommen. Basis-Listing fuer alle, oder sichere dir als Einziger die Exklusiv-Position deiner Kategorie.",
+    tiers:[
+      {nm:"Basis", pr:"49", per:"/Monat", hot:false, feats:["Im Verzeichnis gelistet","1 verlinktes Profil","Posten in der Gruppe erlaubt"], cta:"Basis waehlen", stripe:"#stripe-basis"},
+      {nm:"Featured", pr:"99", per:"/Monat", hot:true, feats:["Oben in der Kategorie","Newsletter-Erwaehnung","Mehr Gruppen-Posts/Monat"], cta:"Featured waehlen", stripe:"#stripe-featured"},
+      {nm:"Exklusiv", pr:"249", per:"/Monat", hot:false, feats:["Einziger Partner der Kategorie","Top-Platzierung ueberall","Nur 1 Platz verfuegbar"], cta:"Exklusiv sichern", stripe:"#stripe-exklusiv"}
+    ],
+    reg:'Noch nicht gelistet? ', regLink:"Als Anbieter eintragen →",
+    pNote:"Monatlich oder jaehrlich (2 Monate gratis), jederzeit kuendbar. Gruendungspartner-Konditionen. 'Anzeige' = bezahlte Platzierung. Makler nur vermieterseitig (Bestellerprinzip).",
+    cH2:"Neue Wohnungen zuerst", cP:"Gratis Graz-Checkliste als PDF, plus neue Wohnungen aus der Gruppe, bevor sie oeffentlich gehen.",
+    cPh:"deine@email.at", cBtn:"Checkliste holen", cOk:"Danke! Deine Checkliste ist unterwegs. 📩", cErr:"Bitte gueltige E-Mail eingeben.",
+    fDisc:"Transparenz: Einige Links sind Empfehlungs-/Affiliate-Links: schliesst du darueber ab, erhalten wir ggf. eine Provision, fuer dich ohne Aufpreis. Mit 'Anzeige' markierte Plaetze sind bezahlte Werbung.",
+    toastGo:"Weiterleitung → ", toastStripe:"Stripe-Abo-Link hier einsetzen: "
+  },
+  en:{
+    gKick:"Graz · Info Portal", gH1:"Welcome. What brings you here?",
+    gSub:"Everything for living, moving and settling in Graz: one vetted partner per task.",
+    gNew:"New in Graz", gNewD:"I'm moving to Graz and setting everything up.",
+    gMove:"Moving within Graz", gMoveD:"I'm changing flats inside Graz.",
+    gTrust:"Free · No sign-up · One vetted partner per task",
+    nCats:"Categories", nPartner:"Become a partner", back:"change selection",
+    kickNew:"New in Graz", kickMove:"Moving in Graz",
+    h1New:"Arrived in Graz? We've prepared everything.",
+    h1Move:"Moving in Graz? Get it all done in one place.",
+    leadNew:"From internet and insurance to the handover: one vetted Graz partner for every task. No searching.",
+    leadMove:"Movers, cleaning, handover, new contracts, bundled so your move runs smoothly.",
+    mMembersL:"in the housing group", mCatsL:"categories", mFreeL:"partner slots open",
+    adStrong:"Ad space for a Graz partner", adSmall:"Banner · sold directly",
+    badgeRec:"Pick", badgeAd:"Ad", plRec:"Recommended", plPartner:"Recommended partner",
+    free:"Your spot here →", view:"View →", claim:"Claim this spot",
+    pKick:"For Graz businesses", pH2:"Become a listed partner",
+    pSub:"Reach people moving to or within Graz right now. A basic listing for everyone, or be the single exclusive partner of your category.",
+    tiers:[
+      {nm:"Basic", pr:"49", per:"/month", hot:false, feats:["Listed in the directory","1 linked profile","Posting in the group allowed"], cta:"Choose Basic", stripe:"#stripe-basis"},
+      {nm:"Featured", pr:"99", per:"/month", hot:true, feats:["Top of the category","Newsletter mention","More group posts/month"], cta:"Choose Featured", stripe:"#stripe-featured"},
+      {nm:"Exclusive", pr:"249", per:"/month", hot:false, feats:["Only partner in the category","Top placement everywhere","Only 1 slot available"], cta:"Claim exclusive", stripe:"#stripe-exklusiv"}
+    ],
+    reg:'Not listed yet? ', regLink:"Register as a provider →",
+    pNote:"Monthly or yearly (2 months free), cancel anytime. Founding-partner rates. 'Ad' = paid placement. Estate agents landlord-side only (Austrian Bestellerprinzip).",
+    cH2:"New flats first", cP:"Free Graz checklist PDF, plus new flats from the group before they go public.",
+    cPh:"you@email.at", cBtn:"Get the checklist", cOk:"Thanks! Your checklist is on its way. 📩", cErr:"Please enter a valid email.",
+    fDisc:"Transparency: some links are referral/affiliate links: if you sign up through them we may earn a commission, at no extra cost to you. Slots marked 'Ad' are paid advertising.",
+    toastGo:"Redirect → ", toastStripe:"Insert your Stripe subscription link here: "
+  },
+  sl:{
+    gKick:"Gradec · Info portal", gH1:"Dobrodošli. Kaj vas pripelje sem?",
+    gSub:"Vse za bivanje, selitev in prihod v Gradec: en preverjen partner za vsako nalogo.",
+    gNew:"Nov v Gradcu", gNewD:"Selim se v Gradec in vse urejam na novo.",
+    gMove:"Selitev v Gradcu", gMoveD:"Menjam stanovanje znotraj Gradca.",
+    gTrust:"Brezplačno · Brez prijave · En preverjen partner za vsako nalogo",
+    nCats:"Kategorije", nPartner:"Postanite partner", back:"druga izbira",
+    kickNew:"Nov v Gradcu", kickMove:"Selitev v Gradcu",
+    h1New:"Prispeli v Gradec? Vse smo pripravili.",
+    h1Move:"Selitev v Gradec? Vse uredite na enem mestu.",
+    leadNew:"Od interneta in zavarovanja do predaje stanovanja: za vsako nalogo preverjen partner v Gradcu. Brez iskanja.",
+    leadMove:"Selitveno podjetje, čiščenje, predaja, nove pogodbe: zbrano na enem mestu, da selitev poteka gladko.",
+    mMembersL:"v stanovanjski skupini", mCatsL:"kategorij", mFreeL:"prostih mest za partnerje",
+    adStrong:"Oglasni prostor za partnersko podjetje v Gradcu", adSmall:"Banner · neposredna prodaja",
+    badgeRec:"Priporočilo", badgeAd:"Oglas", plRec:"Priporočilo", plPartner:"Priporočen partner",
+    free:"Vaše mesto tukaj →", view:"Poglej →", claim:"Rezerviraj to mesto",
+    pKick:"Za podjetja v Gradcu", pH2:"Postanite partner na seznamu",
+    pSub:"Dosezite ljudi, ki se prav zdaj selijo v Gradec ali znotraj njega. Osnovni vpis za vse ali edini ekskluzivni partner svoje kategorije.",
+    tiers:[
+      {nm:"Osnovni", pr:"49", per:"/mesec", hot:false, feats:["Vpis v imenik","1 povezan profil","Objavljanje v skupini"], cta:"Izberi osnovni", stripe:"#stripe-basis"},
+      {nm:"Izpostavljeni", pr:"99", per:"/mesec", hot:true, feats:["Na vrhu kategorije","Omemba v glasilu","Več objav v skupini/mesec"], cta:"Izberi izpostavljeni", stripe:"#stripe-featured"},
+      {nm:"Ekskluzivni", pr:"249", per:"/mesec", hot:false, feats:["Edini partner v kategoriji","Vrhunska uvrstitev povsod","Na voljo samo 1 mesto"], cta:"Rezerviraj ekskluzivno", stripe:"#stripe-exklusiv"}
+    ],
+    reg:'Še ni na seznamu? ', regLink:"Prijavite se kot ponudnik →",
+    pNote:"Mesečno ali letno (2 meseca brezplačno), preklic možen kadarkoli. Pogoji za ustanovne partnerje. 'Oglas' = plačana uvrstitev. Posredniki samo na strani najemodajalca.",
+    cH2:"Nova stanovanja najprej", cP:"Brezplačen kontrolni seznam za Gradec v PDF, in nova stanovanja iz skupine, preden postanejo javna.",
+    cPh:"vas@email.at", cBtn:"Prenesi seznam", cOk:"Hvala! Vaš seznam je na poti. 📩", cErr:"Vnesite veljaven e-mail.",
+    fDisc:"Preglednost: nekatere povezave so priporočilne/partnerske: če se prijavite prek njih, lahko prejmemo provizijo, za vas brez dodatnih stroškov. Mesta z oznako 'Oglas' so plačano oglaševanje.",
+    toastGo:"Preusmeritev → ", toastStripe:"Vstavite povezavo do naročnine Stripe: "
+  },
+  hr:{
+    gKick:"Graz · Info portal", gH1:"Dobrodošli. Što vas dovodi ovdje?",
+    gSub:"Sve za stanovanje, selidbu i dolazak u Graz: jedan provjeren partner za svaki zadatak.",
+    gNew:"Nov u Grazu", gNewD:"Selim se u Graz i sve uređujem ispočetka.",
+    gMove:"Selidba u Grazu", gMoveD:"Mijenjam stan unutar Graza.",
+    gTrust:"Besplatno · Bez prijave · Jedan provjeren partner za svaki zadatak",
+    nCats:"Kategorije", nPartner:"Postanite partner", back:"drugi odabir",
+    kickNew:"Nov u Grazu", kickMove:"Selidba u Grazu",
+    h1New:"Stigli u Graz? Sve smo pripremili.",
+    h1Move:"Selidba u Graz? Obavite sve na jednom mjestu.",
+    leadNew:"Od interneta i osiguranja do primopredaje stana: za svaki zadatak provjeren partner u Grazu. Bez traženja.",
+    leadMove:"Selidbena firma, čišćenje, primopredaja, novi ugovori: sve na jednom mjestu da selidba prođe glatko.",
+    mMembersL:"u grupi za stanove", mCatsL:"kategorija", mFreeL:"slobodnih mjesta za partnere",
+    adStrong:"Oglasni prostor za partnersku firmu u Grazu", adSmall:"Banner · izravna prodaja",
+    badgeRec:"Preporuka", badgeAd:"Oglas", plRec:"Preporuka", plPartner:"Preporučeni partner",
+    free:"Vaše mjesto ovdje →", view:"Pogledaj →", claim:"Rezerviraj ovo mjesto",
+    pKick:"Za firme u Grazu", pH2:"Postanite partner na popisu",
+    pSub:"Dosegnite ljude koji se upravo sele u Graz ili unutar njega. Osnovni upis za sve ili jedini ekskluzivni partner svoje kategorije.",
+    tiers:[
+      {nm:"Osnovni", pr:"49", per:"/mjesec", hot:false, feats:["Upis u imenik","1 povezani profil","Objavljivanje u grupi"], cta:"Odaberi osnovni", stripe:"#stripe-basis"},
+      {nm:"Istaknuti", pr:"99", per:"/mjesec", hot:true, feats:["Na vrhu kategorije","Spomen u newsletteru","Više objava u grupi/mjesec"], cta:"Odaberi istaknuti", stripe:"#stripe-featured"},
+      {nm:"Ekskluzivni", pr:"249", per:"/mjesec", hot:false, feats:["Jedini partner u kategoriji","Vrhunski plasman posvuda","Dostupno samo 1 mjesto"], cta:"Rezerviraj ekskluzivno", stripe:"#stripe-exklusiv"}
+    ],
+    reg:'Još niste na popisu? ', regLink:"Prijavite se kao pružatelj usluga →",
+    pNote:"Mjesečno ili godišnje (2 mjeseca besplatno), otkazivanje u svakom trenutku. Uvjeti za osnivačke partnere. 'Oglas' = plaćeni plasman. Posrednici samo na strani najmodavca.",
+    cH2:"Novi stanovi prvi", cP:"Besplatan kontrolni popis za Graz u PDF-u, plus novi stanovi iz grupe prije nego postanu javni.",
+    cPh:"vas@email.at", cBtn:"Preuzmi popis", cOk:"Hvala! Vaš popis je na putu. 📩", cErr:"Unesite važeći e-mail.",
+    fDisc:"Transparentnost: neke poveznice su preporuke/partnerske: ako se prijavite putem njih, možemo zaraditi proviziju, za vas bez dodatnih troškova. Mjesta označena 'Oglas' su plaćeno oglašavanje.",
+    toastGo:"Preusmjeravanje → ", toastStripe:"Umetnite poveznicu pretplate na Stripe: "
+  },
+  hu:{
+    gKick:"Graz · Info portal", gH1:"Üdvözöljük. Mi hozta ide?",
+    gSub:"Minden lakhatáshoz, költözéshez és a Grazba érkezéshez: egy ellenőrzött partner minden feladatra.",
+    gNew:"Új Grazban", gNewD:"Grazba költözöm és mindent újra rendezek.",
+    gMove:"Költözés Grazon belül", gMoveD:"Lakást váltok Grazon belül.",
+    gTrust:"Ingyenes · Regisztráció nélkül · Egy ellenőrzött partner minden feladatra",
+    nCats:"Kategóriák", nPartner:"Legyen partner", back:"másik választás",
+    kickNew:"Új Grazban", kickMove:"Költözés Grazban",
+    h1New:"Megérkezett Grazba? Mindent előkészítettünk.",
+    h1Move:"Költözés Grazba? Intézzen el mindent egy helyen.",
+    leadNew:"Internettől a biztosításig és a lakásátadásig: minden feladatra ellenőrzött grazi partner. Felesleges keresgélés nélkül.",
+    leadMove:"Költöztetőcég, takarítás, átadás, új szerződések: egy csokorban, hogy a költözés gördülékenyen menjen.",
+    mMembersL:"a lakás-csoportban", mCatsL:"kategória", mFreeL:"szabad partnerhely",
+    adStrong:"Reklámfelület egy grazi partnernek", adSmall:"Banner · közvetlen értékesítés",
+    badgeRec:"Ajánlás", badgeAd:"Hirdetés", plRec:"Ajánlás", plPartner:"Ajánlott partner",
+    free:"Az Ön helye itt →", view:"Megtekintés →", claim:"Foglalja le ezt a helyet",
+    pKick:"Grazi vállalkozásoknak", pH2:"Legyen listázott partner",
+    pSub:"Érje el azokat, akik éppen Grazba vagy Grazon belül költöznek. Alaplistázás mindenkinek, vagy legyen kategóriája egyetlen exkluzív partnere.",
+    tiers:[
+      {nm:"Alap", pr:"49", per:"/hó", hot:false, feats:["Listázás a könyvtárban","1 linkelt profil","Posztolás a csoportban"], cta:"Alap választása", stripe:"#stripe-basis"},
+      {nm:"Kiemelt", pr:"99", per:"/hó", hot:true, feats:["A kategória élén","Hírlevélben való említés","Több csoport-poszt/hónap"], cta:"Kiemelt választása", stripe:"#stripe-featured"},
+      {nm:"Exkluzív", pr:"249", per:"/hó", hot:false, feats:["Egyetlen partner a kategóriában","Legjobb hely mindenhol","Csak 1 hely elérhető"], cta:"Exkluzív foglalása", stripe:"#stripe-exklusiv"}
+    ],
+    reg:'Még nincs a listán? ', regLink:"Regisztráljon szolgáltatóként →",
+    pNote:"Havi vagy éves (2 hónap ingyen), bármikor lemondható. Alapító-partner feltételek. 'Hirdetés' = fizetett elhelyezés. Ingatlanközvetítő csak bérbeadói oldalon.",
+    cH2:"Új lakások elsőként", cP:"Ingyenes Graz-ellenőrzőlista PDF-ben, és új lakások a csoportból, mielőtt nyilvánosságra kerülnek.",
+    cPh:"on@email.at", cBtn:"Kérem a listát", cOk:"Köszönjük! A listája úton van. 📩", cErr:"Kérem, adjon meg érvényes e-mailt.",
+    fDisc:"Átláthatóság: egyes linkek ajánló/partner linkek: ha rajtuk keresztül jelentkezik, jutalékot kaphatunk, Önnek többletköltség nélkül. A 'Hirdetés' jelöléssel ellátott helyek fizetett reklámok.",
+    toastGo:"Átirányítás → ", toastStripe:"Ide illessze be a Stripe-előfizetési linket: "
+  }
+
+};
+
+/* ================= KATEGORIEN =================
+   type: 'affiliate' | 'sponsor' | 'both' | 'own'
+   partner: Name ODER null (= frei)
+   dest: deine /go/-Redirect-URL
+   de/en/sl/hr/hu: [Titel, Beschreibung]
+================================================= */
+const GROUPS = [
+  {id:"move",  de:"Wohnung & Umzug",       en:"Home & Moving",         sl:"Stanovanje in selitev",  hr:"Stan i selidba",        hu:"Lakás és költözés"},
+  {id:"admin", de:"Vertraege & Admin",     en:"Contracts & Admin",     sl:"Pogodbe in administracija", hr:"Ugovori i administracija", hu:"Szerződések és ügyintézés"},
+  {id:"setup", de:"Einrichten & Sanieren", en:"Furnish & Renovate",    sl:"Opremljanje in obnova",  hr:"Opremanje i obnova",    hu:"Berendezés és felújítás"},
+  {id:"house", de:"Haushalt & Services",   en:"Household & Services",  sl:"Gospodinjstvo in storitve", hr:"Kućanstvo i usluge", hu:"Háztartás és szolgáltatások"},
+  {id:"arrive",de:"Ankommen in Graz",      en:"Settling in Graz",      sl:"Prihod v Gradec",        hr:"Dolazak u Graz",        hu:"Beilleszkedés Grazban"}
+];
+const CATS = [
+  {g:"move", type:"sponsor",  partner:"Musterumzug Graz", dest:"/go/umzug",
+   de:["Umzugsfirma","Transport & Helfer, faire Fixpreise."], en:["Moving company","Transport & helpers, fair fixed prices."],
+   sl:["Selitveno podjetje","Prevoz in pomočniki, poštene fiksne cene."], hr:["Selidbena firma","Prijevoz i pomoćnici, poštene fiksne cijene."],
+   hu:["Költöztetőcég","Szállítás és segítők, korrekt fix árak."]},
+  {g:"move", type:"both",     partner:null, dest:"/go/transporter",
+   de:["Transporter mieten","Stundenweise, ohne Fuehrerschein-Upgrade."], en:["Rent a van","By the hour, no special licence."],
+   sl:["Najem kombija","Na uro, brez dodatne kategorije."], hr:["Najam kombija","Na sat, bez dodatne kategorije."],
+   hu:["Kisteautó bérlés","Órabér, külön jogosítvány nélkül."]},
+  {g:"move", type:"sponsor",  partner:null, dest:"/go/reinigung-uebergabe",
+   de:["Uebergabereinigung","Endreinigung fuer die Kautions-Rueckgabe."], en:["Handover cleaning","End cleaning to get your deposit back."],
+   sl:["Čiščenje ob predaji","Končno čiščenje za vrnitev kavcije."], hr:["Čišćenje pri primopredaji","Završno čišćenje za povrat pologa."],
+   hu:["Átadási takarítás","Végső takarítás az óvadék visszakapásához."]},
+  {g:"move", type:"sponsor",  partner:null, dest:"/go/makler",
+   de:["Makler / Verwaltung","Nur vermieterseitig (Bestellerprinzip)."], en:["Agent / management","Landlord-side only (Bestellerprinzip)."],
+   sl:["Posrednik / upravljanje","Samo na strani najemodajalca."], hr:["Posrednik / upravljanje","Samo na strani najmodavca."],
+   hu:["Ingatlanközvetítő / kezelés","Csak bérbeadói oldalon."]},
+  {g:"move", type:"own",      partner:"Nahuen Suites", dest:"https://nahuensuites.com",
+   de:["Uebergangswohnung","Moebliert fuer 1-6 Monate, bis alles fertig ist."], en:["Temporary flat","Furnished for 1-6 months while you settle."],
+   sl:["Prehodno stanovanje","Pohištveno za 1-6 mesecev."], hr:["Privremeni stan","Namješten za 1-6 mjeseci."],
+   hu:["Átmeneti lakás","Bútorozott 1-6 hónapra."]},
+
+  {g:"admin", type:"affiliate", partner:"-", dest:"/go/internet",
+   de:["Internet & Handy","Grazer Tarife inkl. Studenten-Angebote."], en:["Internet & mobile","Graz tariffs incl. student deals."],
+   sl:["Internet in mobilni","Graške tarife vklj. študentske ugodnosti."], hr:["Internet i mobilni","Graške tarife uklj. studentske pogodnosti."],
+   hu:["Internet és mobil","Grazi csomagok, diákkedvezményekkel."]},
+  {g:"admin", type:"affiliate", partner:"-", dest:"/go/strom",
+   de:["Strom & Gas","Anbieter fuer die neue Adresse wechseln."], en:["Electricity & gas","Switch provider for your new address."],
+   sl:["Elektrika in plin","Zamenjajte ponudnika za novi naslov."], hr:["Struja i plin","Promijenite opskrbljivača za novu adresu."],
+   hu:["Áram és gáz","Váltson szolgáltatót az új címre."]},
+  {g:"admin", type:"affiliate", partner:"-", dest:"/go/versicherung",
+   de:["Haushaltsversicherung","In 2 Minuten abgeschlossen."], en:["Home insurance","Done in 2 minutes."],
+   sl:["Zavarovanje gospodinjstva","Sklenjeno v 2 minutah."], hr:["Osiguranje kućanstva","Sklopljeno u 2 minute."],
+   hu:["Lakásbiztosítás","2 perc alatt megkötve."]},
+  {g:"admin", type:"affiliate", partner:"-", dest:"/go/kaution",
+   de:["Kaution","Kautionsversicherung statt Barkaution."], en:["Deposit","Deposit insurance instead of cash."],
+   sl:["Kavcija","Zavarovanje kavcije namesto gotovine."], hr:["Polog","Osiguranje pologa umjesto gotovine."],
+   hu:["Óvadék","Óvadékbiztosítás készpénz helyett."]},
+  {g:"admin", type:"affiliate", partner:"-", dest:"/go/konto",
+   de:["Bankkonto","Gratis-Konto fuer den Umzug eroeffnen."], en:["Bank account","Open a free account for your move."],
+   sl:["Bančni račun","Odprite brezplačen račun za selitev."], hr:["Bankovni račun","Otvorite besplatan račun za selidbu."],
+   hu:["Bankszámla","Nyisson ingyenes számlát a költözéshez."]},
+
+  {g:"setup", type:"sponsor", partner:null, dest:"/go/sanierung",
+   de:["Sanierung / Maler","Maler, Boden, Fliesen: Grazer Betriebe."], en:["Renovation / painter","Painting, flooring, tiling: local firms."],
+   sl:["Obnova / pleskanje","Pleskanje, tla, ploščice: graška podjetja."], hr:["Obnova / soboslikar","Sobanje, podovi, pločice: graške firme."],
+   hu:["Felújítás / festés","Festés, padló, csempe: grazi cégek."]},
+  {g:"setup", type:"sponsor", partner:null, dest:"/go/handwerker",
+   de:["Handwerker","Elektriker & Installateur, schnell vor Ort."], en:["Tradespeople","Electrician & plumber, fast on site."],
+   sl:["Mojstri","Električar in vodovodar, hitro na lokaciji."], hr:["Majstori","Električar i vodoinstalater, brzo na terenu."],
+   hu:["Szakemberek","Villanyszerelő és vízvezeték-szerelő, gyorsan."]},
+  {g:"setup", type:"both", partner:null, dest:"/go/moebel",
+   de:["Moebel","Neu & gebraucht, guenstig einrichten."], en:["Furniture","New & used, furnish on a budget."],
+   sl:["Pohištvo","Novo in rabljeno, ugodna oprema."], hr:["Namještaj","Novo i rabljeno, povoljno opremanje."],
+   hu:["Bútor","Új és használt, kedvező berendezés."]},
+
+  {g:"house", type:"sponsor", partner:null, dest:"/go/reinigung",
+   de:["Reinigungskraft","Regelmaessiger Putzservice."], en:["Cleaner","Regular cleaning service."],
+   sl:["Čistilka","Redno čiščenje."], hr:["Čistačica","Redovno čišćenje."],
+   hu:["Takarító","Rendszeres takarítás."]},
+  {g:"house", type:"sponsor", partner:null, dest:"/go/schluesseldienst",
+   de:["Schluesseldienst","Ausgesperrt? Grazer Notdienst."], en:["Locksmith","Locked out? Graz emergency service."],
+   sl:["Ključavničar","Zaklenjeni? Graška nujna služba."], hr:["Ključar","Zaključani? Graška hitna služba."],
+   hu:["Lakatos","Kizárta? Grazi ügyelet."]},
+  {g:"house", type:"sponsor", partner:null, dest:"/go/garten",
+   de:["Garten / Winterdienst","Pflege, Schneeraeumung, Betreuung."], en:["Garden / winter service","Care, snow clearing, upkeep."],
+   sl:["Vrt / zimska služba","Nega, odstranjevanje snega."], hr:["Vrt / zimska služba","Njega, uklanjanje snijega."],
+   hu:["Kert / téli szolgáltatás","Gondozás, havazás, karbantartás."]},
+
+  {g:"arrive", type:"sponsor", partner:null, dest:"/go/fitness",
+   de:["Fitnessstudio","Studios in deiner Naehe."], en:["Gym","Studios near you."],
+   sl:["Fitnes","Studii v bližini."], hr:["Teretana","Studiji u blizini."],
+   hu:["Fitneszterem","Stúdió a közelben."]},
+  {g:"arrive", type:"sponsor", partner:null, dest:"/go/sprachkurse",
+   de:["Sprachkurse","Deutsch & mehr fuer Zuzuegler."], en:["Language courses","German & more for newcomers."],
+   sl:["Tečaji jezika","Nemščina in več za priseljence."], hr:["Tečajevi jezika","Njemački i više za pridošlice."],
+   hu:["Nyelvtanfolyamok","Német és több újonnan érkezőknek."]},
+  {g:"arrive", type:"both", partner:null, dest:"/go/mobilitaet",
+   de:["Mobilitaet","Auto-Abo, E-Bike, Parkplatz."], en:["Mobility","Car subscription, e-bike, parking."],
+   sl:["Mobilnost","Naročnina na avto, e-kolo, parkirišče."], hr:["Mobilnost","Pretplata na auto, e-bicikl, parking."],
+   hu:["Mobilitás","Autó-előfizetés, e-bringa, parkolás."]}
+];
+
+const LANGS = ["de","en","sl","hr","hu"];
+
+/* ================= STATE + GATE ================= */
+const state = { lang:"de", intent:null };
+
+function detectIntent(){ // Domain -> Vorauswahl (Gate wird trotzdem gezeigt)
+  const h = location.hostname;
+  if(h.includes("umziehen")) return "umziehen";
+  if(h.includes("neuingraz")) return "neu";
+  return null;
+}
+
+function setLang(l){
+  state.lang = l; document.documentElement.lang = l;
+  try{ localStorage.setItem('graz.lang', l); }catch(e){}
+  document.querySelectorAll('[data-lang]').forEach(b=>b.classList.toggle('on', b.dataset.lang===l));
+  renderGate(); if(!document.getElementById('hub').classList.contains('hidden')) renderHub();
+}
+document.querySelectorAll('[data-lang]').forEach(b=> b.addEventListener('click', ()=>setLang(b.dataset.lang)));
+
+function renderGate(){
+  const t = T[state.lang];
+  const set=(id,v)=>{const e=document.getElementById(id); if(e) e.textContent=v;};
+  set('gKick',t.gKick); set('gH1',t.gH1); set('gSub',t.gSub);
+  set('gNew',t.gNew); set('gNewD',t.gNewD); set('gMove',t.gMove); set('gMoveD',t.gMoveD);
+  if(t.gTrust) set('gTrust',t.gTrust);
+}
+document.querySelectorAll('.choice').forEach(c=> c.addEventListener('click', ()=>{
+  state.intent = c.dataset.intent;
+  document.getElementById('gate').classList.add('hidden');
+  document.getElementById('hub').classList.remove('hidden');
+  renderHub(); window.scrollTo(0,0);
+}));
+document.getElementById('backBtn').addEventListener('click', ()=>{
+  document.getElementById('hub').classList.add('hidden');
+  document.getElementById('gate').classList.remove('hidden');
+});
+
+/* ================= HUB RENDER ================= */
+function renderHub(){
+  const t = T[state.lang], L = state.lang, isNew = state.intent==="neu";
+  const set=(id,v)=>{const e=document.getElementById(id); if(e) e.textContent=v;};
+
+  set('nCats',t.nCats); set('nPartner',t.nPartner); set('backTxt',t.back);
+  set('hKick', isNew?t.kickNew:t.kickMove);
+  set('hH1',  isNew?t.h1New:t.h1Move);
+  set('hLead',isNew?t.leadNew:t.leadMove);
+  set('mMembersL',t.mMembersL); set('mCatsL',t.mCatsL); set('mFreeL',t.mFreeL);
+  set('adTag',t.badgeAd); set('adStrong',t.adStrong); set('adSmall',t.adSmall);
+  set('pKick',t.pKick); set('pH2',t.pH2); set('pSub',t.pSub); set('pNote',t.pNote);
+  set('cH2',t.cH2); set('cP',t.cP); document.getElementById('email').placeholder=t.cPh;
+  set('subBtn',t.cBtn); set('fDisc',t.fDisc); document.getElementById('subOk').textContent='';
+
+  // Directory
+  const dir = document.getElementById('directory'); dir.innerHTML='';
+  GROUPS.forEach(gr=>{
+    const items = CATS.filter(c=>c.g===gr.id); if(!items.length) return;
+    const sec=document.createElement('section'); sec.className='group';
+    sec.innerHTML=`<div class="group-head"><h2>${gr[L]||gr.en}</h2></div><div class="grid"></div>`;
+    const grid=sec.querySelector('.grid');
+    items.forEach(c=>{
+      const isOwn=c.type==='own', isAff=c.type==='affiliate', free=!c.partner && !isOwn;
+      const badge = isOwn?'' : isAff?`<span class="badge aff">${t.badgeRec}</span>`
+                                    :`<span class="badge spo">${t.badgeAd}</span>`;
+      const pl = free
+        ? `<div class="pl free"><span class="lbl">${t.plPartner}</span><b>${t.free}</b></div>`
+        : `<div class="pl"><span class="lbl">${isAff?t.plRec:t.plPartner}</span><b>${c.partner}</b></div>`;
+      const btn = free
+        ? `<a class="go claim" href="#partner">${t.claim}</a>`
+        : `<a class="go" href="${c.dest}" data-dest="${c.dest}" rel="sponsored nofollow noopener" target="_blank">${t.view}</a>`;
+      const txt = c[L] || c.en;
+      const card=document.createElement('div'); card.className='card';
+      card.innerHTML=`<div class="ctop"><h3>${txt[0]}</h3>${badge}</div><p>${txt[1]}</p>${pl}${btn}`;
+      grid.appendChild(card);
+    });
+    dir.appendChild(sec);
+  });
+
+  // Tiers
+  const tiersEl=document.getElementById('tiers'); tiersEl.innerHTML='';
+  t.tiers.forEach(ti=>{
+    const el=document.createElement('div'); el.className='tier'+(ti.hot?' hot':'');
+    el.innerHTML=`<div class="nm">${ti.nm}</div>
+      <div class="pr">€${ti.pr}<span>${ti.per}</span></div>
+      <ul>${ti.feats.map(f=>`<li>${f}</li>`).join('')}</ul>
+      <button data-stripe="${ti.stripe}" data-nm="${ti.nm}">${ti.cta}</button>`;
+    tiersEl.appendChild(el);
+  });
+  document.getElementById('regLine').innerHTML = t.reg + `<a href="${REG_FORM}">${t.regLink}</a>`;
+
+  // Meta
+  document.getElementById('mCats').textContent = CATS.filter(c=>c.type!=='own').length;
+  const freeSlots = CATS.filter(c=>(c.type==='sponsor'||c.type==='both') && !c.partner).length;
+  document.getElementById('mFree').textContent = freeSlots;
+  document.getElementById('yr').textContent = new Date().getFullYear();
+}
+
+/* Klicks (Affiliate/Partner). Navigation laeuft ueber den /go/-Link
+   (siehe _redirects). Der Klick wird nicht mehr abgefangen. */
+document.getElementById('directory').addEventListener('click', e=>{
+  const a=e.target.closest('.go:not(.claim)'); if(!a) return;
+  // href ist bereits /go/<slug>; _redirects leitet auf das echte Ziel um.
+});
+/* Stripe-Abo. LIVE: data-stripe mit Payment-Link fuellen. */
+document.getElementById('tiers').addEventListener('click', e=>{
+  const b=e.target.closest('button[data-stripe]'); if(!b) return;
+  const link=b.dataset.stripe;
+  if(link && link.startsWith('http')) window.location.href=link;
+  else showToast(T[state.lang].toastStripe + b.dataset.nm);
+});
+/* E-Mail. LIVE: fetch an Brevo/Mailchimp. */
+document.getElementById('subBtn').addEventListener('click', sub);
+document.getElementById('email').addEventListener('keydown', e=>{ if(e.key==='Enter') sub(); });
+function sub(){
+  const t=T[state.lang], v=document.getElementById('email').value.trim(), ok=document.getElementById('subOk');
+  if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v)){ ok.style.color='#BE372C'; ok.textContent=t.cErr; return; }
+  ok.style.color='#2E6B3E'; ok.textContent=t.cOk; document.getElementById('email').value='';
+}
+let tT; function showToast(m){const el=document.getElementById('toast');el.textContent=m;el.classList.add('show');
+  clearTimeout(tT);tT=setTimeout(()=>el.classList.remove('show'),2600);}
+
+/* Init */
+try{ const saved=localStorage.getItem('graz.lang'); if(saved && LANGS.includes(saved)){ state.lang=saved; } }catch(e){}
+detectIntent(); // optional: Vorauswahl per Domain (Gate wird dennoch gezeigt)
+setLang(state.lang);
+</script>
+</body>
+</html>
