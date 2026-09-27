@@ -224,11 +224,83 @@
   footer .disc{background:#EDEADD;border-radius:12px;padding:13px 15px;margin-bottom:16px;line-height:1.5;}
   footer a{color:var(--green);}
 
+  /* ===== SISTERS ===== */
+  .sisters{padding:12px 0 4px;}
+  .sisters h2{font-family:"Bricolage Grotesque",sans-serif;font-weight:700;font-size:1.05rem;
+    color:var(--pine);margin:0 0 12px;}
+  .sister-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
+  @media(max-width:760px){.sister-grid{grid-template-columns:repeat(2,1fr);}}
+  @media(max-width:430px){.sister-grid{grid-template-columns:1fr;}}
+  .sister{border:1px solid var(--line);border-radius:12px;background:var(--card);padding:13px 14px;
+    text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:3px;transition:transform .16s,border-color .16s;}
+  .sister:hover{transform:translateY(-2px);border-color:var(--green);}
+  .sister strong{font-family:"Bricolage Grotesque",sans-serif;font-size:.94rem;color:var(--pine);}
+  .sister span{font-size:.78rem;color:var(--muted);}
+
+  /* ===== JOBS ===== */
+  .jobsbox{background:#fff;border:1px solid var(--line);border-radius:20px;padding:30px 26px;margin:40px 0;}
+  .jobsbox h2{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:1.5rem;color:var(--pine);margin:6px 0;}
+  .jobsbox .sub{color:var(--muted);max-width:56ch;margin:0 0 18px;}
+  .jobform{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+  @media(max-width:600px){.jobform{grid-template-columns:1fr;}}
+  .jobform .full{grid-column:1 / -1;}
+  .jobform label{font-family:"JetBrains Mono",monospace;font-size:.62rem;letter-spacing:.06em;
+    text-transform:uppercase;color:var(--muted);display:block;margin-bottom:4px;}
+  .jobform input,.jobform textarea,.jobform select{width:100%;padding:11px 13px;border-radius:10px;
+    border:1px solid #c9d3c2;background:#fff;font-size:.92rem;font-family:inherit;color:var(--ink);}
+  .jobform textarea{min-height:92px;resize:vertical;}
+  .jobform input:focus-visible,.jobform textarea:focus-visible,.jobform select:focus-visible{
+    outline:3px solid var(--gold);outline-offset:1px;}
+  .jobform button{grid-column:1 / -1;background:var(--green);color:#fff;border:none;border-radius:10px;
+    padding:13px;font-weight:700;font-size:.95rem;cursor:pointer;font-family:inherit;}
+  .jobform button:hover{background:var(--pine);}
+  .jobsbox .ok{color:var(--green);font-weight:600;margin-top:12px;min-height:1.1em;font-size:.88rem;}
+
+  /* ===== MODAL ===== */
+  .modal{position:fixed;inset:0;z-index:140;background:rgba(15,39,22,.62);display:none;
+    align-items:center;justify-content:center;padding:20px;}
+  .modal.open{display:flex;}
+  .modal-card{background:var(--card);border-radius:18px;max-width:620px;width:100%;max-height:86vh;
+    overflow:auto;padding:30px 28px;position:relative;box-shadow:var(--shadow-lg);}
+  .modal-card h2{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:1.4rem;
+    color:var(--pine);margin:0 0 14px;}
+  .modal-x{position:absolute;top:14px;right:16px;background:none;border:none;font-size:1.2rem;
+    color:var(--muted);cursor:pointer;line-height:1;}
+  .modal-x:hover{color:var(--red);}
+  .modal-body{white-space:pre-wrap;font-family:"Inter",system-ui,sans-serif;font-size:.9rem;
+    color:var(--ink);line-height:1.6;margin:0;}
+
   .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);
     background:var(--pine);color:#fff;padding:12px 20px;border-radius:99px;font-size:.85rem;font-weight:600;
     opacity:0;pointer-events:none;transition:.35s;z-index:120;box-shadow:var(--shadow-lg);max-width:90vw;}
   .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
   @media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto;}}
+  /* ===== CITY GUIDE ===== */
+  .cityguide{margin:46px 0;}
+  .cityguide .eyebrow{font-size:.72rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--green);}
+  .cityguide h2{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:1.6rem;color:var(--pine);margin:6px 0 6px;}
+  .cityguide .sub{color:var(--muted);max-width:60ch;margin:0 0 20px;}
+  .cg-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;}
+  @media(max-width:760px){.cg-grid{grid-template-columns:1fr;}}
+  .cg-card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px 20px;box-shadow:var(--shadow-sm);}
+  .cg-card.wide{grid-column:1/-1;}
+  .cg-card h3{font-family:"Bricolage Grotesque",sans-serif;font-weight:700;font-size:1.08rem;color:var(--pine);margin:0 0 7px;}
+  .cg-card p{margin:0 0 10px;color:var(--ink);font-size:.92rem;line-height:1.55;}
+  .cg-card ul{margin:0;padding-left:18px;color:var(--muted);font-size:.88rem;line-height:1.7;}
+  .cg-card .links{margin-top:10px;display:flex;flex-wrap:wrap;gap:8px;}
+  .cg-card .links a{font-size:.82rem;font-weight:600;color:var(--green);text-decoration:none;
+    border:1px solid var(--line);border-radius:999px;padding:6px 12px;background:var(--green-soft);}
+  .cg-card .links a:hover{border-color:var(--green);}
+  .cg-affil{margin-top:8px;}
+  .cg-affil .eyebrow{margin-bottom:12px;}
+  .cg-links{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+  @media(max-width:760px){.cg-links{grid-template-columns:1fr;}}
+  .cg-link{display:flex;flex-direction:column;gap:3px;border:1px solid var(--line);border-radius:12px;
+    background:var(--card);padding:14px 15px;text-decoration:none;color:var(--ink);}
+  .cg-link:hover{border-color:var(--green);}
+  .cg-link b{font-size:.95rem;color:var(--pine);}
+  .cg-link span{font-size:.8rem;color:var(--muted);}
+  .cg-link em{font-size:.72rem;color:var(--green);font-style:normal;font-weight:700;}
 </style>
 </head>
 <body>
@@ -278,6 +350,8 @@
       <a href="#" class="brand" id="hBrand">Wohnen in <b>Graz</b></a>
       <div class="tnav">
         <a href="#directory" id="nCats">Kategorien</a>
+        <a href="#city" id="nCity">Stadt-Guide</a>
+        <a href="#jobs" id="nJobs">Inserate</a>
         <a href="#partner" class="pt" id="nPartner">Partner werden</a>
         <div class="langmini">
           <button data-lang="de" class="on">DE</button>
@@ -308,6 +382,11 @@
     <div class="ad"><span class="tag" id="adTag">Anzeige</span>
       <strong id="adStrong"></strong><small id="adSmall"></small></div>
 
+    <section class="sisters">
+      <h2 id="sisH"></h2>
+      <div class="sister-grid" id="sisterGrid"></div>
+    </section>
+
     <div id="directory"></div>
 
     <section id="partner" class="partnerbox">
@@ -317,6 +396,36 @@
       <div class="tiers" id="tiers"></div>
       <p class="reg" id="regLine"></p>
       <p class="partner-note" id="pNote"></p>
+    </section>
+
+    <section id="jobs" class="jobsbox">
+      <div class="eyebrow" id="jobKick"></div>
+      <h2 id="jobH"></h2>
+      <p class="sub" id="jobSub"></p>
+      <div class="jobform">
+        <div class="full"><label id="lName"></label><input id="jTitle" type="text"></div>
+        <div class="full"><label id="lDesc"></label><textarea id="jDesc"></textarea></div>
+        <div><label id="lType"></label>
+          <select id="jType">
+            <option value="student">Student / Aushilfe</option>
+            <option value="internship">Praktikum / internship</option>
+            <option value="other">Sonstiges / other</option>
+          </select></div>
+        <div><label id="lContact"></label><input id="jContact" type="email"></div>
+        <button id="jPostBtn" type="button"></button>
+      </div>
+      <div class="ok" id="jOk" role="status"></div>
+    </section>
+
+    <section id="city" class="cityguide">
+      <div class="eyebrow" id="cgKick"></div>
+      <h2 id="cgH"></h2>
+      <p class="sub" id="cgSub"></p>
+      <div class="cg-grid" id="cgGrid"></div>
+      <div class="cg-affil">
+        <div class="eyebrow" id="cgAffKick"></div>
+        <div class="cg-links" id="cgLinks"></div>
+      </div>
     </section>
 
     <section class="capture">
@@ -334,9 +443,17 @@
     <div class="wrap">
       <div class="disc" id="fDisc"></div>
       © <span id="yr"></span> <span id="fName">Graz Info-Portal</span> &nbsp;·&nbsp;
-      <a href="#" id="fImp">Impressum</a> &nbsp;·&nbsp; <a href="#" id="fDat">Datenschutz</a>
+      <a href="#" id="fImp">Impressum</a> &nbsp;·&nbsp; <a href="#" id="fDat">Datenschutz</a> &nbsp;·&nbsp; <a href="#" id="fTrans">Transparenz</a>
     </div>
   </footer>
+</div>
+
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal-card">
+    <button class="modal-x" id="modalX" aria-label="close">✕</button>
+    <h2 id="modalTitle"></h2>
+    <pre class="modal-body" id="modalBody"></pre>
+  </div>
 </div>
 
 <div class="toast" id="toast"></div>
@@ -351,7 +468,7 @@ const T = {
     gNew:"Neu in Graz", gNewD:"Ich ziehe nach Graz und richte alles neu ein.",
     gMove:"Umziehen in Graz", gMoveD:"Ich wechsle innerhalb von Graz die Wohnung.",
     gTrust:"Kostenlos · Keine Anmeldung · Ein gepruefter Partner pro Aufgabe",
-    nCats:"Kategorien", nPartner:"Partner werden", back:"andere Auswahl",
+    nCats:"Kategorien", nCity:"Stadt-Guide", nJobs:"Inserate", nPartner:"Partner werden", back:"andere Auswahl",
     kickNew:"Neu in Graz", kickMove:"Umziehen in Graz",
     h1New:"Angekommen in Graz? Wir haben alles vorbereitet.",
     h1Move:"Umzug in Graz? Erledige alles an einem Ort.",
@@ -381,7 +498,7 @@ const T = {
     gNew:"New in Graz", gNewD:"I'm moving to Graz and setting everything up.",
     gMove:"Moving within Graz", gMoveD:"I'm changing flats inside Graz.",
     gTrust:"Free · No sign-up · One vetted partner per task",
-    nCats:"Categories", nPartner:"Become a partner", back:"change selection",
+    nCats:"Categories", nCity:"City guide", nJobs:"Classifieds", nPartner:"Become a partner", back:"change selection",
     kickNew:"New in Graz", kickMove:"Moving in Graz",
     h1New:"Arrived in Graz? We've prepared everything.",
     h1Move:"Moving in Graz? Get it all done in one place.",
@@ -411,7 +528,7 @@ const T = {
     gNew:"Nov v Gradcu", gNewD:"Selim se v Gradec in vse urejam na novo.",
     gMove:"Selitev v Gradcu", gMoveD:"Menjam stanovanje znotraj Gradca.",
     gTrust:"Brezplačno · Brez prijave · En preverjen partner za vsako nalogo",
-    nCats:"Kategorije", nPartner:"Postanite partner", back:"druga izbira",
+    nCats:"Kategorije", nCity:"Vodnik", nJobs:"Mali oglasi", nPartner:"Postanite partner", back:"druga izbira",
     kickNew:"Nov v Gradcu", kickMove:"Selitev v Gradcu",
     h1New:"Prispeli v Gradec? Vse smo pripravili.",
     h1Move:"Selitev v Gradec? Vse uredite na enem mestu.",
@@ -441,7 +558,7 @@ const T = {
     gNew:"Nov u Grazu", gNewD:"Selim se u Graz i sve uređujem ispočetka.",
     gMove:"Selidba u Grazu", gMoveD:"Mijenjam stan unutar Graza.",
     gTrust:"Besplatno · Bez prijave · Jedan provjeren partner za svaki zadatak",
-    nCats:"Kategorije", nPartner:"Postanite partner", back:"drugi odabir",
+    nCats:"Kategorije", nCity:"Vodič", nJobs:"Mali oglasi", nPartner:"Postanite partner", back:"drugi odabir",
     kickNew:"Nov u Grazu", kickMove:"Selidba u Grazu",
     h1New:"Stigli u Graz? Sve smo pripremili.",
     h1Move:"Selidba u Graz? Obavite sve na jednom mjestu.",
@@ -471,7 +588,7 @@ const T = {
     gNew:"Új Grazban", gNewD:"Grazba költözöm és mindent újra rendezek.",
     gMove:"Költözés Grazon belül", gMoveD:"Lakást váltok Grazon belül.",
     gTrust:"Ingyenes · Regisztráció nélkül · Egy ellenőrzött partner minden feladatra",
-    nCats:"Kategóriák", nPartner:"Legyen partner", back:"másik választás",
+    nCats:"Kategóriák", nCity:"Útmutató", nJobs:"Apróhirdetések", nPartner:"Legyen partner", back:"másik választás",
     kickNew:"Új Grazban", kickMove:"Költözés Grazban",
     h1New:"Megérkezett Grazba? Mindent előkészítettünk.",
     h1Move:"Költözés Grazba? Intézzen el mindent egy helyen.",
@@ -596,6 +713,239 @@ const CATS = [
 
 const LANGS = ["de","en","sl","hr","hu"];
 
+/* ================= SCHWESTER-BETRIEBE (Sister businesses) =================
+   Both directions: link out to each, they link back. Best-effort traffic.
+=========================================================================== */
+const SISTERS = [
+  {nm:"Nahuen Suites",   url:"https://nahuensuites.com",
+   de:"Moeblierte Uebergangswohnungen, 1-6 Monate.", en:"Furnished short-term flats, 1-6 months.",
+   sl:"Pohištvena stanovanja za 1-6 mesecev.", hr:"Namješteni stanovi za 1-6 mjeseci.", hu:"Bútorozott lakások 1-6 hónapra."},
+  {nm:"Anzugsalon.at",   url:"https://anzugsalon.at",
+   de:"Anzuege & Business-Outfits in Graz.", en:"Suits & business outfits in Graz.",
+   sl:"Obleke in poslovna oblačila v Gradcu.", hr:"Odijela i poslovna odjeća u Grazu.", hu:"Öltönyök és üzleti ruházat Grazban."},
+  {nm:"Matmagi",         url:"https://matmagi.no",
+   de:"Skandinavisches Interieur & Design.", en:"Scandinavian interior & design.",
+   sl:"Skandinavsko oblikovanje notranjosti.", hr:"Skandinavski interijer i dizajn.", hu:"Skandináv belsőépítészet és dizájn."},
+  {nm:"Nahuen Capital",  url:"https://nahuencapital.com",
+   de:"Vermoegensverwaltung & Anlagestrategie.", en:"Wealth management & investment strategy.",
+   sl:"Upravljanje premoženja in naložbena strategija.", hr:"Upravljanje imovinom i investicijska strategija.", hu:"Vagyonkezelés és befektetési stratégia."}
+];
+
+/* ================= ZUSAETZLICHE TEXTE (#218) ================= */
+const X = {
+  de:{
+    fTrans:"Transparenz", sisH:"Unsere Betriebe rund um Graz",
+    jobKick:"Inserate", jobH:"Studenten-Jobs in Graz", jobSub:"Kostenlos inserieren: Aushilfsjobs, Praktika, Teilzeit fuer Studierende und Zuzuegler.",
+    lName:"Titel", lDesc:"Kurzbeschreibung", lType:"Art", lContact:"Kontakt-E-Mail",
+    jPost:"Inserat veroeffentlichen", jOk:"Danke! Anfragen kommen an deine E-Mail; das Inserat erscheint in der Gruppe.", jErr:"Bitte Titel, Beschreibung und eine gueltige E-Mail angeben.",
+    impTitle:"Impressum", impBody:"Nahuen Immobilien AG & KG\n\nMedieninhaber und Betreiber dieser Website.\n\nHinweis: Dies ist ein Informationsportal fuer Neuankoemmlinge und Umziehende in Graz. Fuer die Inhalte externer Anbieter wird keine Haftung uebernommen.\n\nKontakt: office@nahuensuites.com",
+    datTitle:"Datenschutz", datBody:"Datenschutz (DSGVO)\n\nWir verarbeiten personenbezogene Daten (E-Mail-Adresse aus dem Formular) ausschliesslich, um dir die angeforderte Information bzw. das Inserat zuzusenden. Rechtsgrundlage: Einwilligung.\n\nEs werden keine Daten an Dritte verkauft. Beim Klick auf Partner- und Affiliate-Links gelten die Datenschutzbestimmungen des jeweiligen Anbieters. Du kannst deine Einwilligung jederzeit widerrufen: office@nahuensuites.com.",
+    transTitle:"Transparenz & Affiliate", transBody:"Einige Links auf dieser Seite sind Empfehlungs- bzw. Affiliate-Links. Schliesst du darueber ab, erhalten wir gegebenenfalls eine Provision, fuer dich ohne Aufpreis. Mit 'Anzeige' markierte Plaetze sind bezahlte Werbung. Dieses Portal gehoert zum Netzwerk der Nahuen Immobilien AG & KG."
+  },
+  en:{
+    fTrans:"Transparency", sisH:"Our businesses around Graz",
+    jobKick:"Classifieds", jobH:"Student jobs in Graz", jobSub:"Post for free: casual jobs, internships, part-time for students and newcomers.",
+    lName:"Title", lDesc:"Short description", lType:"Type", lContact:"Contact email",
+    jPost:"Publish listing", jOk:"Thanks! Enquiries go to your email; the listing appears in the group.", jErr:"Please give a title, a description and a valid email.",
+    impTitle:"Legal notice", impBody:"Nahuen Immobilien AG & KG\n\nPublisher and operator of this website.\n\nNote: this is an information portal for newcomers and people moving within Graz. No liability is accepted for the content of external providers.\n\nContact: office@nahuensuites.com",
+    datTitle:"Privacy", datBody:"Privacy (GDPR)\n\nWe process personal data (the email address from the form) only to send you the information or listing you requested. Legal basis: consent.\n\nNo data is sold to third parties. Clicking partner and affiliate links is subject to the privacy policy of the respective provider. You can withdraw consent at any time: office@nahuensuites.com.",
+    transTitle:"Transparency & affiliate", transBody:"Some links on this page are referral or affiliate links. If you sign up through them we may earn a commission, at no extra cost to you. Slots marked 'Ad' are paid advertising. This portal belongs to the Nahuen Immobilien AG & KG network."
+  },
+  sl:{fTrans:"Preglednost", sisH:"Naša podjetja v Gradcu in okolici",
+    jobKick:"Mali oglasi", jobH:"Študentska dela v Gradcu", jobSub:"Brezplačna objava: priložnostna dela, prakse, delo s krajšim delovnim časom.",
+    lName:"Naslov", lDesc:"Kratek opis", lType:"Vrsta", lContact:"Kontaktni e-mail",
+    jPost:"Objavi oglas", jOk:"Hvala! Povpraševanja gredo na vaš e-mail; oglas se pojavi v skupini.", jErr:"Navedite naslov, opis in veljaven e-mail.",
+    impTitle:"Impresum", impBody:"Nahuen Immobilien AG & KG\n\nZaložnik in upravljavec te strani. Informacijski portal za novince in selivce v Gradec. Za vsebino zunanjih ponudnikov ne odgovarjamo.\n\nKontakt: office@nahuensuites.com",
+    datTitle:"Zasebnost", datBody:"Zasebnost (GDPR)\n\nOsebne podatke (e-mail iz obrazca) obdelujemo le za pošiljanje zahtevanih informacij. Pravna podlaga: privolitev. Podatkov ne prodajamo. Privolitev lahko prekličete: office@nahuensuites.com.",
+    transTitle:"Preglednost in partnerstvo", transBody:"Nekatere povezave so partnerske. Če se prijavite prek njih, lahko prejmemo provizijo, za vas brez dodatnih stroškov. Mesta z oznako 'Oglas' so plačano oglaševanje. Portal pripada mreži Nahuen Immobilien AG & KG."},
+  hr:{fTrans:"Transparentnost", sisH:"Naše firme oko Graza",
+    jobKick:"Mali oglasi", jobH:"Studentski poslovi u Grazu", jobSub:"Besplatna objava: honorarni poslovi, prakse, rad s nepunim radnim vremenom.",
+    lName:"Naslov", lDesc:"Kratki opis", lType:"Vrsta", lContact:"Kontakt e-mail",
+    jPost:"Objavi oglas", jOk:"Hvala! Upiti idu na vaš e-mail; oglas se pojavljuje u grupi.", jErr:"Navedite naslov, opis i važeći e-mail.",
+    impTitle:"Impresum", impBody:"Nahuen Immobilien AG & KG\n\nIzdavač i operator ove stranice. Informacijski portal za pridošlice i one koji se sele u Graz. Ne odgovaramo za sadržaj vanjskih pružatelja.\n\nKontakt: office@nahuensuites.com",
+    datTitle:"Privatnost", datBody:"Privatnost (GDPR)\n\nOsobne podatke (e-mail iz obrasca) obrađujemo samo za slanje traženih informacija. Pravna osnova: privola. Podatke ne prodajemo. Privolu možete povući: office@nahuensuites.com.",
+    transTitle:"Transparentnost i partnerstvo", transBody:"Neke poveznice su partnerske. Ako se prijavite preko njih, možemo zaraditi proviziju, za vas bez dodatnih troškova. Mjesta označena 'Oglas' su plaćeno oglašavanje. Portal pripada mreži Nahuen Immobilien AG & KG."},
+  hu:{fTrans:"Átláthatóság", sisH:"Vállalkozásaink Graz körül",
+    jobKick:"Apróhirdetések", jobH:"Diákmunka Grazban", jobSub:"Ingyenes feladás: alkalmi munkák, szakmai gyakorlat, részmunka.",
+    lName:"Cím", lDesc:"Rövid leírás", lType:"Típus", lContact:"Kapcsolattartó e-mail",
+    jPost:"Hirdetés közzététele", jOk:"Köszönjük! A megkeresések az e-mailjére érkeznek; a hirdetés megjelenik a csoportban.", jErr:"Adjon meg címet, leírást és érvényes e-mailt.",
+    impTitle:"Impresszum", impBody:"Nahuen Immobilien AG & KG\n\nA weboldal kiadója és üzemeltetője. Információs portál Grazba érkezőknek és költözőknek. A külső szolgáltatók tartalmáért nem vállalunk felelősséget.\n\nKapcsolat: office@nahuensuites.com",
+    datTitle:"Adatvédelem", datBody:"Adatvédelem (GDPR)\n\nA személyes adatokat (az űrlap e-mail címe) kizárólag a kért információ küldésére használjuk. Jogalap: hozzájárulás. Adatot nem adunk el. A hozzájárulás bármikor visszavonható: office@nahuensuites.com.",
+    transTitle:"Átláthatóság és partnerség", transBody:"Egyes linkek partner linkek. Ha rajtuk keresztül jelentkezik, jutalékot kaphatunk, Önnek többletköltség nélkül. A 'Hirdetés' jelöléssel ellátott helyek fizetett reklámok. A portál a Nahuen Immobilien AG & KG hálózatához tartozik."}
+};
+
+/* ================= CITY GUIDE CONTENT (#218) =================
+   Per-language cards + settling-in affiliate links. Each cg-link points at
+   /go/<slug> (see go-links.json + tools/go_redirects.py).
+=================================================================== */
+const CG = {
+  de:{kick:"Stadt-Guide Graz", h:"Ankommen in Graz, Schritt fuer Schritt",
+    sub:"Das Wichtigste fuer Neuankoemmlinge, Studierende und alle, die innerhalb von Graz umziehen.",
+    cards:[
+      ["Meldezettel & Behorde","Pflicht innerhalb von 3 Tagen nach Einzug. Amt der Stadt Graz, Buergeramt; Personalausweis und Mietvertrag oder Meldungsbestaetigung mitnehmen.",
+        ["Frist: 3 Tage ab Einzug","Adresse: Buergeramt, Schmiedgasse","Meldeformular online vorbereiten"]],
+      ["Neu in Graz: die ersten 30 Tage","Meldezettel, Internet, Versicherung, Strom und ein Konto zuerst; Wohnungsuebergabe danach.",
+        ["Meldezettel erledigen","Internet & Strom anmelden","Uebergabeprotokoll checken"]],
+      ["Studierende","Studierendenausweis, Semesterticket, Wohnheim oder WG; Teilzeitjobs findest du oben im Bereich Inserate.",
+        ["Semesterticket & Top-Ticket","Studentenjobs (siehe Inserate)","Bibliothek und Lernraeume"]],
+      ["Umziehen innerhalb von Graz","Kuendigungsfristen pruefen, Uebergabeprotokoll, Zaehlerstaende ablesen, Nachsendeauftrag stellen.",
+        ["Uebergabeprotokoll mit Fotos","Zaehlerstaende notieren","Nachsendeauftrag Post"]],
+      ["Events in Graz","Das ganze Jahr: Fruehlingsfest, Aufsteirern-Festival, Kulturhauptstadt-Erbe, Weihnachtsmaerkte am Hauptplatz.",
+        ["Hauptplatz & Schlossberg","Diagonale, Elevate","Weihnachtsmaerkte im Dezember"]],
+      ["Essen & Ausgehen","Grazer Bauernmarkt, klassische Wirtshaeuser, vegane Cafes in der Innenstadt, steirische Weine vom suedsteirischen Weingebiet.",
+        ["Bauernmarkt am Hauptplatz","Lendplatz Food-Szene","Steirischer Wein & Kuerbisoel"]],
+      ["Stadt & Verkehr","Alles zu Wohnen, Foerderungen und Anmeldungen der Stadt Graz, plus Bus, Bim und S-Bahn.",
+        ["Graz.at Aemter & Services","Holdings Graz (Bim & Bus)","Radtour und Wegweiser"]]
+    ],
+    affKick:"Settling-in: einmal vergleichen, dann wechseln",
+    links:[
+      ["internet","Internet & Festnetz","Tarife fuer Graz vergleichen","Empfehlung"],
+      ["strom","Strom & Gas","Steirische Anbieter vergleichen","Empfehlung"],
+      ["versicherung","Versicherung","Haushalt & Haftpflicht","Empfehlung"],
+      ["konto","Bankkonto","Kostenloses Konto fuer Neukunden","Empfehlung"],
+      ["kaution","Mietkaution","Alternative zur Barkaution","Empfehlung"],
+      ["mobilitaet","Auto & Mobilitaet","Auto-Abo, E-Bike, Parkplatz","Empfehlung"]
+    ],
+    cityLinks:[
+      ["https://www.graz.at","Graz.at","Aemter, Foerderungen, Services"],
+      ["https://www.holding-graz.at","Holding Graz","Bim, Bus & Wasser"],
+      ["https://www.graz.at/cms/beitrag/10037262/8029766","Meldezettel","Anmeldung online vorbereiten"]
+    ]
+  },
+  en:{kick:"Graz city guide", h:"Settling into Graz, step by step",
+    sub:"The essentials for newcomers, students and anyone moving within Graz.",
+    cards:[
+      ["Registration (Meldezettel) & offices","Required within 3 days of moving in. City of Graz registration office; bring ID and your lease or landlord confirmation.",
+        ["Deadline: 3 days after moving in","Office: Buergeramt, Schmiedgasse","Prepare the form online"]],
+      ["New to Graz: first 30 days","Registration, internet, insurance, power and a bank account first; the handover comes after.",
+        ["Complete registration","Set up internet & power","Check the handover report"]],
+      ["Students","Student ID, semester transport ticket, dorm or shared flat; find part-time jobs in the Classifieds above.",
+        ["Semester & Top ticket","Student jobs (see Classifieds)","Library & study spaces"]],
+      ["Moving within Graz","Check notice periods, handover report, read the meters, set up mail forwarding.",
+        ["Handover report with photos","Note the meter readings","Set up mail forwarding"]],
+      ["Events in Graz","Year-round: spring festival, Aufsteirern fair, European Capital of Culture legacy, Christmas markets on the main square.",
+        ["Main square & Schlossberg","Diagonale, Elevate","Christmas markets in December"]],
+      ["Food & going out","Grazer farmers' market, classic taverns, vegan cafes downtown, Styrian wines from the southern wine region.",
+        ["Farmers' market on the main square","Lendplatz food scene","Styrian wine & pumpkin seed oil"]],
+      ["City & transport","Everything on housing, grants and city services, plus bus, tram and suburban rail.",
+        ["Graz.at offices & services","Holding Graz (tram & bus)","Cycling routes & maps"]]
+    ],
+    affKick:"Settling in: compare once, then switch",
+    links:[
+      ["internet","Internet & home phone","Compare plans for Graz","Recommendation"],
+      ["strom","Power & gas","Compare Styrian providers","Recommendation"],
+      ["versicherung","Insurance","Contents & liability cover","Recommendation"],
+      ["konto","Bank account","Free account for new customers","Recommendation"],
+      ["kaution","Rental deposit","Alternative to a cash deposit","Recommendation"],
+      ["mobilitaet","Car & mobility","Car subscription, e-bike, parking","Recommendation"]
+    ],
+    cityLinks:[
+      ["https://www.graz.at","Graz.at","City offices, grants, services"],
+      ["https://www.holding-graz.at","Holding Graz","Tram, bus & water"],
+      ["https://www.graz.at/cms/beitrag/10037262/8029766","Registration","Prepare your registration online"]
+    ]
+  },
+  sl:{kick:"Vodnik po Gradcu", h:"Naselitev v Gradcu, korak za korakom",
+    sub:"Najpomembnejše za novince, študente in vse, ki se selijo znotraj Gradca.",
+    cards:[
+      ["Prijava (Meldezettel) in uradi","Obvezna v 3 dneh po vselitvi. Urad mesta Gradec; prinesite osebno izkaznico in najemno pogodbo ali potrdilo lastnika.",
+        ["Rok: 3 dni po vselitvi","Urad: Buergeramt, Schmiedgasse","Obrazec pripravite na spletu"]],
+      ["Novi v Gradcu: prvih 30 dni","Najprej prijava, internet, zavarovanje, elektrika in bančni račun; primopredaja sledi.",
+        ["Uredite prijavo","Poskrbite za internet in elektriko","Preverite zapisnik o primopredaji"]],
+      ["Študenti","Študentska izkaznica, semesterska vozovnica, dom ali skupno stanovanje; honorarne posle poiščite zgoraj v Malih oglasih.",
+        ["Semesterska in Top vozovnica","Študentska dela (glej Male oglase)","Knjižnica in učni prostori"]],
+      ["Selitev znotraj Gradca","Preverite odpovedne roke, zapisnik o primopredaji, odčitajte števce, uredite preusmeritev pošte.",
+        ["Zapisnik s fotografijami","Zabeležite odčitke števcev","Preusmeritev pošte"]],
+      ["Dogodki v Gradcu","Vse leto: pomladni festival, sejem Aufsteirern, dediščina kulturne prestolnice, božični sejmi na Glavnem trgu.",
+        ["Glavni trg in Schlossberg","Diagonale, Elevate","Božični sejmi decembra"]],
+      ["Hrana in izhodi","Tržnica Bauernmarkt, klasične gostilne, veganske kavarne v središču, štajerska vina iz južne vinske regije.",
+        ["Tržnica na Glavnem trgu","Kulinarična scena Lendplatz","Štajersko vino in bučno olje"]],
+      ["Mesto in promet","Vse o stanovanjih, subvencijah in storitvah mesta, ter avtobus, tramvaj in S-bahn.",
+        ["Uradi in storitve Graz.at","Holding Graz (tramvaj in avtobus)","Kolesarske poti in zemljevidi"]]
+    ],
+    affKick:"Naselitev: primerjajte enkrat, nato zamenjajte",
+    links:[
+      ["internet","Internet in fiksni telefon","Primerjajte pakete za Gradec","Priporočilo"],
+      ["strom","Elektrika in plin","Primerjajte štajerske ponudnike","Priporočilo"],
+      ["versicherung","Zavarovanje","Gospodinjstvo in odgovornost","Priporočilo"],
+      ["konto","Bančni račun","Brezplačen račun za nove stranke","Priporočilo"],
+      ["kaution","Varščina","Alternativa gotovinski varščini","Priporočilo"],
+      ["mobilitaet","Avto in mobilnost","Avto-naročnina, e-kolo, parkirišče","Priporočilo"]
+    ],
+    cityLinks:[
+      ["https://www.graz.at","Graz.at","Uradi, subvencije, storitve"],
+      ["https://www.holding-graz.at","Holding Graz","Tramvaj, avtobus in voda"],
+      ["https://www.graz.at/cms/beitrag/10037262/8029766","Prijava","Pripravite prijavo na spletu"]
+    ]
+  },
+  hr:{kick:"Vodič kroz Graz", h:"Useljavanje u Graz, korak po korak",
+    sub:"Najvažnije za pridošlice, studente i sve koji se sele unutar Graza.",
+    cards:[
+      ["Prijava (Meldezettel) i uredi","Obveza u roku od 3 dana od useljenja. Ured grada Graza; donesite osobnu i ugovor o najmu ili potvrdu najmodavca.",
+        ["Rok: 3 dana od useljenja","Ured: Buergeramt, Schmiedgasse","Pripremite obrazac online"]],
+      ["Novi u Grazu: prvih 30 dana","Prvo prijava, internet, osiguranje, struja i bankovni račun; primopredaja dolazi poslije.",
+        ["Obavite prijavu","Riješite internet i struju","Provjerite zapisnik o primopredaji"]],
+      ["Studenti","Studentska iskaznica, semestralna karta, dom ili zajednički stan; honorarne poslove potražite gore u Malim oglasima.",
+        ["Semestralna i Top karta","Studentski poslovi (v. Male oglase)","Knjižnica i prostori za učenje"]],
+      ["Selidba unutar Graza","Provjerite otkazne rokove, zapisnik o primopredaji, očitajte brojila, postavite preusmjeravanje pošte.",
+        ["Zapisnik s fotografijama","Zabilježite stanja brojila","Preusmjeravanje pošte"]],
+      ["Događanja u Grazu","Tijekom cijele godine: proljetni festival, sajam Aufsteirern, baština europske prijestolnice kulture, božićni sajmovi na Glavnom trgu.",
+        ["Glavni trg i Schlossberg","Diagonale, Elevate","Božićni sajmovi u prosincu"]],
+      ["Hrana i izlasci","Tržnica Bauernmarkt, klasične gostionice, veganski kafići u centru, štajerska vina iz južne vinske regije.",
+        ["Tržnica na Glavnom trgu","Gastro scena Lendplatz","Štajersko vino i bučino ulje"]],
+      ["Grad i promet","Sve o stanovanju, potporama i gradskim uslugama, te autobus, tramvaj i S-bahn.",
+        ["Uredi i usluge Graz.at","Holding Graz (tramvaj i autobus)","Biciklističke rute i karte"]]
+    ],
+    affKick:"Useljavanje: usporedite jednom, zatim promijenite",
+    links:[
+      ["internet","Internet i fiksni telefon","Usporedite pakete za Graz","Preporuka"],
+      ["strom","Struja i plin","Usporedite štajerske pružatelje","Preporuka"],
+      ["versicherung","Osiguranje","Kućanstvo i odgovornost","Preporuka"],
+      ["konto","Bankovni račun","Besplatan račun za nove klijente","Preporuka"],
+      ["kaution","Polog za najam","Alternativa gotovinskom pologu","Preporuka"],
+      ["mobilitaet","Auto i mobilnost","Pretplata na auto, e-bicikl, parking","Preporuka"]
+    ],
+    cityLinks:[
+      ["https://www.graz.at","Graz.at","Uredi, potpore, usluge"],
+      ["https://www.holding-graz.at","Holding Graz","Tramvaj, autobus i voda"],
+      ["https://www.graz.at/cms/beitrag/10037262/8029766","Prijava","Pripremite prijavu online"]
+    ]
+  },
+  hu:{kick:"Graz városi útmutató", h:"Megérkezés Grazba, lépésről lépésre",
+    sub:"A legfontosabbak újonnan érkezőknek, diákoknak és mindenkinek, aki Grazon belül költözik.",
+    cards:[
+      ["Bejelentés (Meldezettel) és hivatalok","A beköltözést követő 3 napon belül kötelező. Graz városi hivatala; vigyen személyit és bérleti szerződést vagy bérbeadói igazolást.",
+        ["Határidő: 3 nap a beköltözés után","Hivatal: Buergeramt, Schmiedgasse","Az űrlapot online előkészítheti"]],
+      ["Új Grazban: az első 30 nap","Először bejelentés, internet, biztosítás, áram és bankszámla; az átadás ezután következik.",
+        ["Intézze a bejelentést","Intézze az internetet és az áramot","Ellenőrizze az átadási jegyzőkönyvet"]],
+      ["Diákok","Diákigazolvány, szemeszterbérlet, kollégium vagy közös lakás; részmunka a fenti Apróhirdetésekben.",
+        ["Szemeszter- és Top-bérlet","Diákmunka (lásd Apróhirdetések)","Könyvtár és tanulóhelyek"]],
+      ["Költözés Grazon belül","Ellenőrizze a felmondási időket, átadási jegyzőkönyv, olvassa le a mérőórákat, kérjen posta-utánküldést.",
+        ["Átadási jegyzőkönyv fotókkal","Jegyezze fel a mérőállásokat","Posta-utánküldés beállítása"]],
+      ["Rendezvények Grazban","Egész évben: tavaszi fesztivál, Aufsteirern vásár, az Európa Kulturális Fővárosa öröksége, karácsonyi vásárok a Főtéren.",
+        ["Főtér és Schlossberg","Diagonale, Elevate","Karácsonyi vásárok decemberben"]],
+      ["Étel és szórakozás","Bauernmarkt piac, klasszikus vendéglők, vegán kávézók a belvárosban, stájer borok a dél-stájer borvidékről.",
+        ["Piac a Főtéren","Lendplatz gasztro-színtér","Stájer bor és tökmagolaj"]],
+      ["Város és közlekedés","Minden a lakhatásról, támogatásokról és városi szolgáltatásokról, valamint busz, villamos és S-bahn.",
+        ["Graz.at hivatalok és szolgáltatások","Holding Graz (villamos és busz)","Kerékpárutak és térképek"]]
+    ],
+    affKick:"Beilleszkedés: hasonlítson össze egyszer, aztán váltson",
+    links:[
+      ["internet","Internet és vezetékes telefon","Hasonlítsa össze a grazi csomagokat","Ajánlás"],
+      ["strom","Áram és gáz","Hasonlítsa össze a stájer szolgáltatókat","Ajánlás"],
+      ["versicherung","Biztosítás","Lakás és felelősség","Ajánlás"],
+      ["konto","Bankszámla","Ingyenes számla új ügyfeleknek","Ajánlás"],
+      ["kaution","Kaució","Alternatíva a készpénzes kaucióhoz","Ajánlás"],
+      ["mobilitaet","Autó és mobilitás","Autó-előfizetés, e-bringa, parkolás","Ajánlás"]
+    ],
+    cityLinks:[
+      ["https://www.graz.at","Graz.at","Hivatalok, támogatások, szolgáltatások"],
+      ["https://www.holding-graz.at","Holding Graz","Villamos, busz és víz"],
+      ["https://www.graz.at/cms/beitrag/10037262/8029766","Bejelentés","Készítse elő a bejelentést online"]
+    ]
+  }
+};
+
 /* ================= STATE + GATE ================= */
 const state = { lang:"de", intent:null };
 
@@ -637,7 +987,7 @@ function renderHub(){
   const t = T[state.lang], L = state.lang, isNew = state.intent==="neu";
   const set=(id,v)=>{const e=document.getElementById(id); if(e) e.textContent=v;};
 
-  set('nCats',t.nCats); set('nPartner',t.nPartner); set('backTxt',t.back);
+  set('nCats',t.nCats); set('nCity',t.nCity); set('nJobs',t.nJobs); set('nPartner',t.nPartner); set('backTxt',t.back);
   set('hKick', isNew?t.kickNew:t.kickMove);
   set('hH1',  isNew?t.h1New:t.h1Move);
   set('hLead',isNew?t.leadNew:t.leadMove);
@@ -684,6 +1034,46 @@ function renderHub(){
   });
   document.getElementById('regLine').innerHTML = t.reg + `<a href="${REG_FORM}">${t.regLink}</a>`;
 
+  // Sisters
+  const x = X[L] || X.en;
+  set('sisH', x.sisH); set('fTrans', x.fTrans);
+  const sg = document.getElementById('sisterGrid'); sg.innerHTML='';
+  SISTERS.forEach(si=>{
+    const a=document.createElement('a'); a.className='sister'; a.href=si.url;
+    a.target='_blank'; a.rel='noopener';
+    a.innerHTML=`<strong>${si.nm}</strong><span>${si[L]||si.en}</span>`;
+    sg.appendChild(a);
+  });
+
+  // Jobs labels
+  set('jobKick', x.jobKick); set('jobH', x.jobH); set('jobSub', x.jobSub);
+  set('lName', x.lName); set('lDesc', x.lDesc); set('lType', x.lType); set('lContact', x.lContact);
+  set('jPostBtn', x.jPost); document.getElementById('jOk').textContent='';
+
+  // City guide
+  const cg = CG[L] || CG.en;
+  set('cgKick', cg.kick); set('cgH', cg.h); set('cgSub', cg.sub); set('cgAffKick', cg.affKick);
+  const cgg = document.getElementById('cgGrid'); cgg.innerHTML='';
+  cg.cards.forEach(c=>{
+    const el=document.createElement('div'); el.className='cg-card';
+    el.innerHTML=`<h3>${c[0]}</h3><p>${c[1]}</p>`+
+      (c[2]?`<ul>${c[2].map(x=>`<li>${x}</li>`).join('')}</ul>`:'');
+    cgg.appendChild(el);
+  });
+  const cl = document.getElementById('cgLinks'); cl.innerHTML='';
+  cg.links.forEach(k=>{
+    const a=document.createElement('a'); a.className='cg-link'; a.href='/go/'+k[0];
+    a.dataset.dest='/go/'+k[0]; a.rel='sponsored nofollow noopener'; a.target='_blank';
+    a.innerHTML=`<b>${k[1]}</b><span>${k[2]}</span><em>${k[3]}</em>`;
+    cl.appendChild(a);
+  });
+  cg.cityLinks.forEach(k=>{
+    const a=document.createElement('a'); a.className='cg-link'; a.href=k[0];
+    a.rel='noopener'; a.target='_blank';
+    a.innerHTML=`<b>${k[1]}</b><span>${k[2]}</span>`;
+    cl.appendChild(a);
+  });
+
   // Meta
   document.getElementById('mCats').textContent = CATS.filter(c=>c.type!=='own').length;
   const freeSlots = CATS.filter(c=>(c.type==='sponsor'||c.type==='both') && !c.partner).length;
@@ -714,6 +1104,36 @@ function sub(){
 }
 let tT; function showToast(m){const el=document.getElementById('toast');el.textContent=m;el.classList.add('show');
   clearTimeout(tT);tT=setTimeout(()=>el.classList.remove('show'),2600);}
+
+/* Jobs-Inserat. LIVE: an Backend/Google-Form posten. Hier: Kontrolle + Bestaetigung. */
+document.getElementById('jPostBtn').addEventListener('click', postJob);
+function postJob(){
+  const L=state.lang, x=X[L]||X.en, ok=document.getElementById('jOk');
+  const title=document.getElementById('jTitle').value.trim();
+  const desc=document.getElementById('jDesc').value.trim();
+  const contact=document.getElementById('jContact').value.trim();
+  if(!title || !desc || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(contact)){
+    ok.style.color='#BE372C'; ok.textContent=x.jErr; return; }
+  ok.style.color='#2E6B3E'; ok.textContent=x.jOk;
+  document.getElementById('jTitle').value=''; document.getElementById('jDesc').value=''; document.getElementById('jContact').value='';
+}
+
+/* Modal: Impressum / Datenschutz / Transparenz */
+const MODAL_KEYS = { fImp:['impTitle','impBody'], fDat:['datTitle','datBody'], fTrans:['transTitle','transBody'] };
+function openModal(k){
+  const L=state.lang, x=X[L]||X.en, pair=MODAL_KEYS[k]; if(!pair) return;
+  document.getElementById('modalTitle').textContent=x[pair[0]];
+  document.getElementById('modalBody').textContent=x[pair[1]];
+  const m=document.getElementById('modal'); m.classList.add('open');
+}
+function closeModal(){ document.getElementById('modal').classList.remove('open'); }
+Object.keys(MODAL_KEYS).forEach(k=>{
+  const el=document.getElementById(k);
+  if(el) el.addEventListener('click', e=>{ e.preventDefault(); openModal(k); });
+});
+document.getElementById('modalX').addEventListener('click', closeModal);
+document.getElementById('modal').addEventListener('click', e=>{ if(e.target.id==='modal') closeModal(); });
+document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeModal(); });
 
 /* Init */
 try{ const saved=localStorage.getItem('graz.lang'); if(saved && LANGS.includes(saved)){ state.lang=saved; } }catch(e){}
