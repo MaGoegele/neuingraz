@@ -1,0 +1,24 @@
+{
+  "affiliate": {
+    "internet": "https://TARGET-set-internet-publisher-link",
+    "strom": "https://TARGET-set-energy-publisher-link",
+    "versicherung": "https://TARGET-set-insurance-publisher-link",
+    "kaution": "https://TARGET-set-deposit-publisher-link",
+    "konto": "https://TARGET-set-bank-publisher-link"
+  },
+  "sponsor": {
+    "umzug": "https://TARGET-set-moving-partner",
+    "transporter": "https://TARGET-set-van-rental-partner",
+    "reinigung-uebergabe": "https://TARGET-set-handover-cleaning",
+    "makler": "https://TARGET-set-agent-partner",
+    "sanierung": "https://TARGET-set-renovation-partner",
+    "handwerker": "https://TARGET-set-trades-partner",
+    "moebel": "https://TARGET-set-furniture-partner",
+    "reinigung": "https://TARGET-set-cleaning-partner",
+    "schluesseldienst": "https://TARGET-set-locksmith-partner",
+    "garten": "https://TARGET-set-garden-partner",
+    "fitness": "https://TARGET-set-gym-partner",
+    "sprachkurse": "https://TARGET-set-language-school-partner",
+    "mobilitaet": "https://TARGET-set-mobility-partner"
+  }
+}
