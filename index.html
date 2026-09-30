@@ -66,42 +66,49 @@
   a{color:inherit;}
 
   /* ===== GATE ===== */
-  .gate{position:fixed;inset:0;z-index:100;color:#EFF3EA;overflow:auto;
+  .gate{position:fixed;inset:0;z-index:100;color:var(--ink);overflow:auto;
     display:flex;flex-direction:column;align-items:center;justify-content:center;
     text-align:center;padding:30px 20px;
     background:
-      radial-gradient(1200px 600px at 12% -10%, rgba(185,138,46,.22), transparent 60%),
-      radial-gradient(900px 500px at 110% 20%, rgba(46,107,62,.45), transparent 55%),
-      linear-gradient(160deg,#16351F 0%, #0F2716 60%, #0B1D10 100%);}
-  .gate::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.06;
-    background-image:radial-gradient(#EFF3EA 1px, transparent 1px);
-    background-size:22px 22px;}
+      linear-gradient(112deg, rgba(244,241,231,.985) 0%, rgba(244,241,231,.955) 44%, rgba(244,241,231,.72) 76%, rgba(244,241,231,.55) 100%),
+      url('img/graz-hero.jpg') center 34%/cover no-repeat,
+      var(--paper);}
   .gate.hidden{display:none;}
   .gate .lang{position:absolute;top:20px;right:20px;display:flex;gap:6px;flex-wrap:wrap;
     justify-content:flex-end;max-width:60vw;
     font-family:"JetBrains Mono",monospace;font-size:.78rem;z-index:2;}
-  .lang button{background:transparent;border:1px solid #3c5c45;color:#B9CBB4;
+  .lang button{background:rgba(255,255,255,.85);border:1px solid var(--line);color:var(--muted);
     padding:6px 10px;border-radius:8px;cursor:pointer;font-family:inherit;font-weight:700;
     transition:background .16s,border-color .16s,color .16s;}
-  .lang button:hover{border-color:var(--gold);color:#fff;}
-  .lang button.on{background:var(--gold);border-color:var(--gold);color:#231a06;}
-  .gate .mark{margin-bottom:10px;filter:drop-shadow(0 8px 22px rgba(0,0,0,.35));}
+  .lang button:hover{border-color:var(--green);color:var(--pine);}
+  .lang button.on{background:var(--pine);border-color:var(--pine);color:#fff;}
+  .gate .mark{margin-bottom:12px;}
   .gate .kick{font-family:"JetBrains Mono",monospace;letter-spacing:.16em;text-transform:uppercase;
-    font-size:.72rem;color:var(--gold);font-weight:700;}
+    font-size:.72rem;color:var(--red);font-weight:700;}
   .gate h1{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;
-    font-size:clamp(2rem,6vw,3.4rem);line-height:1.05;margin:10px 0 6px;color:#fff;max-width:18ch;}
-  .gate p.sub{color:#B9CBB4;max-width:46ch;margin:0 0 32px;font-size:1.02rem;}
+    font-size:clamp(2rem,6vw,3.4rem);line-height:1.05;margin:10px 0 6px;color:var(--pine);max-width:18ch;}
+  .gate p.sub{color:#48584b;max-width:46ch;margin:0 0 32px;font-size:1.02rem;}
   .choices{display:flex;gap:16px;flex-wrap:wrap;justify-content:center;}
-  .choice{background:rgba(15,39,22,.72);border:1px solid #315539;border-radius:16px;padding:26px 24px;
-    width:230px;cursor:pointer;text-align:left;transition:transform .16s,border-color .16s,background .16s,box-shadow .16s;color:inherit;
-    backdrop-filter:blur(3px);}
-  .choice:hover{transform:translateY(-4px);border-color:var(--gold);background:#123018;box-shadow:var(--shadow-lg);}
+  .choice{background:#fff;border:1px solid var(--line);border-radius:16px;padding:24px 22px;
+    width:230px;cursor:pointer;text-align:left;color:inherit;box-shadow:var(--shadow);
+    transition:transform .16s,border-color .16s,box-shadow .16s;}
+  .choice:hover{transform:translateY(-3px);border-color:var(--green);box-shadow:var(--shadow-lg);}
   .choice:focus-visible{outline:3px solid var(--gold);outline-offset:2px;}
-  .choice .ic{font-size:1.5rem;margin-bottom:8px;display:block;}
-  .choice strong{font-family:"Bricolage Grotesque",sans-serif;font-size:1.2rem;color:#fff;display:block;}
-  .choice small{color:#9db69c;font-size:.85rem;display:block;margin-top:4px;}
+  .choice strong{font-family:"Bricolage Grotesque",sans-serif;font-size:1.2rem;color:var(--pine);display:block;}
+  .choice small{color:var(--muted);font-size:.85rem;display:block;margin-top:4px;}
+  .choice .arrow{color:var(--green);font-weight:700;font-size:1.05rem;}
   .gate .trust{margin-top:30px;font-family:"JetBrains Mono",monospace;font-size:.68rem;
-    letter-spacing:.08em;color:#7f9a7e;text-transform:uppercase;}
+    letter-spacing:.08em;color:var(--muted);text-transform:uppercase;}
+  .photo-credit{position:absolute;bottom:14px;right:18px;z-index:2;font-size:.66rem;
+    font-family:"JetBrains Mono",monospace;color:#7a8677;}
+  .photo-credit a{color:var(--green);}
+  @media(max-width:560px){
+    .gate{background:
+      linear-gradient(180deg, rgba(244,241,231,.96) 0%, rgba(244,241,231,.99) 55%, rgba(244,241,231,.99) 100%),
+      url('img/graz-hero.jpg') center 30%/cover no-repeat,
+      var(--paper);}
+    .photo-credit{position:static;margin-top:20px;}
+  }
 
   /* ===== HUB ===== */
   #hub.hidden{display:none;}
@@ -120,14 +127,21 @@
   .langmini button.on{background:var(--pine);border-color:var(--pine);color:#fff;}
   @media(max-width:640px){.tnav a{display:none;} .tnav a.pt{display:inline;}}
 
-  .hero{padding:54px 0 20px;position:relative;}
+  .hero{padding:0 0 20px;position:relative;}
   .hero .back{background:none;border:none;color:var(--muted);font-size:.8rem;cursor:pointer;
-    padding:0;font-family:"JetBrains Mono",monospace;margin-bottom:14px;}
+    padding:0;font-family:"JetBrains Mono",monospace;margin:22px 0 14px;}
   .hero .back:hover{color:var(--red);}
   .hero h1{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;
     font-size:clamp(2rem,5.5vw,3.5rem);line-height:1.03;letter-spacing:-.02em;
     margin:8px 0 0;color:var(--pine);max-width:18ch;}
   .hero p.lead{font-size:1.1rem;color:var(--muted);max-width:58ch;margin:16px 0 0;}
+  .hero-photo{margin:30px 0 0;border-radius:var(--radius);overflow:hidden;border:1px solid var(--line);
+    box-shadow:var(--shadow);aspect-ratio:16/7;position:relative;background:var(--card);}
+  .hero-photo img{width:100%;height:100%;object-fit:cover;display:block;}
+  .hero-photo figcaption{position:absolute;bottom:0;right:0;background:rgba(253,252,246,.85);
+    padding:4px 10px;font-size:.66rem;font-family:"JetBrains Mono",monospace;color:var(--muted);
+    border-top-left-radius:10px;}
+  .hero-photo figcaption a{color:var(--green);}
   .hero .meta{margin-top:22px;font-family:"JetBrains Mono",monospace;font-size:.76rem;
     color:var(--pine);display:flex;gap:22px;flex-wrap:wrap;}
   .hero .meta b{color:var(--red);font-size:1rem;}
@@ -136,9 +150,9 @@
   .stat .n{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:1.5rem;color:var(--pine);line-height:1;}
   .stat .l{font-size:.74rem;color:var(--muted);margin-top:3px;}
 
-  .ad{position:relative;margin:28px 0;border:1.5px dashed var(--gold);
-    background:linear-gradient(180deg,var(--gold-soft),#FBF3E2);
-    border-radius:var(--radius);padding:22px 20px;text-align:center;color:#6a5320;}
+  .ad{position:relative;margin:28px 0;border:1px dashed var(--line);
+    background:var(--card);
+    border-radius:var(--radius);padding:22px 20px;text-align:center;color:var(--muted);}
   .ad .tag{position:absolute;top:9px;left:12px;font-family:"JetBrains Mono",monospace;
     font-size:.6rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);}
   .ad strong{display:block;font-family:"Bricolage Grotesque",sans-serif;font-size:1rem;color:#7a5f1e;}
@@ -178,7 +192,7 @@
   .go.claim:hover{background:#fbeceb;}
 
   /* Partner-Stufen */
-  .partnerbox{background:#fff;border:2px solid var(--pine);border-radius:22px;padding:34px 26px;margin:46px 0;
+  .partnerbox{background:#fff;border:1px solid var(--line);border-radius:20px;padding:34px 26px;margin:46px 0;
     box-shadow:var(--shadow);}
   .partnerbox h2{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;
     font-size:clamp(1.5rem,4vw,2.1rem);color:var(--pine);margin:6px 0 6px;}
@@ -208,7 +222,7 @@
   .reg a{color:var(--red);font-weight:700;}
   .partner-note{font-size:.76rem;color:var(--muted);margin-top:16px;line-height:1.5;}
 
-  .capture{background:linear-gradient(160deg,var(--green-soft),#EFF5EC);border:1px solid #cfe0c8;
+  .capture{background:var(--card);border:1px solid var(--line);
     border-radius:20px;padding:32px 26px;margin:40px 0;text-align:center;}
   .capture h2{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:1.55rem;color:var(--pine);margin:0 0 6px;}
   .capture p{color:var(--muted);max-width:48ch;margin:0 auto 18px;font-size:.94rem;}
@@ -316,13 +330,13 @@
   </div>
   <div class="mark" aria-hidden="true">
     <!-- Uhrturm-Silhouette (Graz) -->
-    <svg width="42" height="58" viewBox="0 0 42 58" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M21 2 L33 14 H9 Z" fill="#B98A2E"/>
-      <rect x="11" y="14" width="20" height="40" fill="#EFF3EA"/>
-      <circle cx="21" cy="26" r="6" fill="#16351F" stroke="#B98A2E" stroke-width="1.5"/>
-      <rect x="20.3" y="22" width="1.4" height="5" fill="#B98A2E"/>
-      <rect x="15" y="40" width="5" height="14" fill="#16351F"/>
-      <rect x="22" y="40" width="5" height="14" fill="#16351F"/>
+    <svg width="38" height="52" viewBox="0 0 42 58" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M21 2 L33 14 H9 Z" fill="#BE372C"/>
+      <rect x="11" y="14" width="20" height="40" rx="1" fill="#fff" stroke="#16351F" stroke-width="1.6"/>
+      <circle cx="21" cy="26" r="6" fill="#fff" stroke="#16351F" stroke-width="1.6"/>
+      <rect x="20.4" y="21.5" width="1.3" height="5" fill="#16351F"/>
+      <rect x="15.5" y="40" width="4.5" height="14" fill="#16351F"/>
+      <rect x="22" y="40" width="4.5" height="14" fill="#16351F"/>
     </svg>
   </div>
   <div class="kick" id="gKick">Graz · Info-Portal</div>
@@ -330,17 +344,16 @@
   <p class="sub" id="gSub">Alles fuer Wohnen, Umzug und Ankommen in Graz: ein gepruefter Partner pro Aufgabe.</p>
   <div class="choices">
     <button class="choice" data-intent="neu">
-      <span class="ic" aria-hidden="true">🧳</span>
-      <strong id="gNew">Neu in Graz</strong>
+      <strong id="gNew">Neu in Graz <span class="arrow" aria-hidden="true">→</span></strong>
       <small id="gNewD">Ich ziehe nach Graz und richte alles neu ein.</small>
     </button>
     <button class="choice" data-intent="umziehen">
-      <span class="ic" aria-hidden="true">📦</span>
-      <strong id="gMove">Umziehen in Graz</strong>
+      <strong id="gMove">Umziehen in Graz <span class="arrow" aria-hidden="true">→</span></strong>
       <small id="gMoveD">Ich wechsle innerhalb von Graz die Wohnung.</small>
     </button>
   </div>
   <div class="trust" id="gTrust">Kostenlos · Keine Anmeldung · Ein gepruefter Partner pro Aufgabe</div>
+  <div class="photo-credit">Foto: <a href="https://commons.wikimedia.org/wiki/File:Graz_Uhrturm-2471.jpg" target="_blank" rel="noopener">Isiwal</a>, CC BY-SA 4.0</div>
 </div>
 
 <!-- ===== HUB ===== -->
@@ -375,6 +388,10 @@
         <span><b id="mCats">0</b> <span id="mCatsL"></span></span>
         <span><b id="mFree">0</b> <span id="mFreeL"></span></span>
       </div>
+      <figure class="hero-photo">
+        <img src="img/graz-hero.jpg" alt="Uhrturm und Altstadt von Graz" loading="lazy" width="1800" height="1200">
+        <figcaption>Graz, Uhrturm — Foto: <a href="https://commons.wikimedia.org/wiki/File:Graz_Uhrturm-2471.jpg" target="_blank" rel="noopener">Isiwal</a>, CC BY-SA 4.0</figcaption>
+      </figure>
     </div>
   </header>
 
